@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./css/App.css";
 import "./css/navbar.css";
-import { BrowserRouter as Router, Switch, Route,} from "react-router-dom";
+import "./css/footer.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { RestaurantPage } from "./screens/RestaurantPage";
 import { CommunityPage } from "./screens/CommunityPage";
 import { OrdersPage } from "./screens/OrdersPage";
@@ -12,8 +13,9 @@ import { HomePage } from "./screens/HomePage";
 import { NavbarHome } from "./components/header";
 import { NavbarRestaurant } from "./components/header/restaurant";
 import { NavbarOthers } from "./components/header/others";
+import { Footer } from "./components/footer";
 function App() {
-  const [path, setPath] = useState()
+  const [path, setPath] = useState();
   const main_path = window.location.pathname;
   return (
     <Router>
@@ -24,31 +26,6 @@ function App() {
       ) : (
         <NavbarOthers setPath={setPath} />
       )}
-      {/* <nav>
-        <ul>
-          <li>
-            <Link to="/restaurant">RestaurantPage</Link>
-          </li>
-          <li>
-            <Link to="/community">CommunityPage</Link>
-          </li>
-          <li>
-            <Link to="/orders">OrdersPage</Link>
-          </li>
-          <li>
-            <Link to="/member_page">MemberPage</Link>
-          </li>
-          <li>
-            <Link to="/help">HelpPage</Link>
-          </li>
-          <li>
-            <Link to="/login">LoginPage</Link>
-          </li> 
-          <li>
-            <Link to="/">HomePage</Link>
-          </li>
-        </ul>
-      </nav> */}
 
       <Switch>
         <Route path="/restaurant">
@@ -73,6 +50,7 @@ function App() {
           <HomePage />
         </Route>
       </Switch>
+      <Footer/>
     </Router>
   );
 }
