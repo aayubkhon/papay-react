@@ -1,5 +1,12 @@
 import React from "react";
-import { Badge, Box, Button, Container, IconButton, Stack } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 export function NavbarHome(props: any) {
@@ -45,7 +52,7 @@ export function NavbarHome(props: any) {
                 Yordam
               </NavLink>
             </Box>
-            <Box className="hover-line" >
+            <Box className="hover-line">
               <IconButton
                 aria-label="cart"
                 id="basic-button"
@@ -68,7 +75,7 @@ export function NavbarHome(props: any) {
                   color: "#ffffff",
                 }}
               >
-              KIRISH
+                KIRISH
               </Button>
             </Box>
           </Stack>
