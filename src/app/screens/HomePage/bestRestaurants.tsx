@@ -1,0 +1,14 @@
+import { Container } from '@mui/material'
+import React from 'react'
+
+const BestRestaurants = () => {
+  return (
+    <div className='top_restaurant_frame'>
+      <Container>
+      BestRestaurants
+      </Container>
+    </div>
+  )
+}
+
+export default BestRestaurants
