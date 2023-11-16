@@ -66,3 +66,12 @@ text-align: left;
 color: #E3C08D;
 }
 
+/* BEST RESTAURANT START */
+
+
+.homepage .best_restaurant_frame{
+  width: 100%;
+  height: 775px;
+  display: flex;
+  background: #0b0e11;
+}
