@@ -64,18 +64,21 @@
   background: #e3c08d;
 }
 
-.parts .targets {
+.parts .targets a {
   position: relative;
   width: 118.052px;
   height: 129.633px;
-  margin-top: 11.6px;
+  margin-top:10px;
   color: #e3c08d;
   font-family: "Poppins";
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 34px;
+  line-height: 24px;
+  text-decoration: none;
 }
+
+
 
 .footer_config .liner {
   position: relative;
@@ -148,7 +151,7 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
-  line-height: 34px;
+  line-height: 14px;
 }
 
 .details .detail_second {
@@ -159,6 +162,6 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 34px;
+  line-height: 14px;
   margin-left: 12px;
 }

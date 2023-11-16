@@ -1,5 +1,6 @@
 import { Box, Container, Stack } from "@mui/material";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export function Footer() {
   return (
@@ -31,14 +32,23 @@ export function Footer() {
               </Stack>
             </Stack>
             <Stack className="parts">
-              <Box className="part_subject">Bo'limlar</Box>
+              <Box className="part_subject">Sections</Box>
               <Box className="devider"></Box>
               <Box className="targets">
-                Bosh Sahifa Oshxonalar Jamiyat Yordam
+                <NavLink to="/" activeClassName="underline">Main Page</NavLink>
+              </Box>
+              <Box className="targets">
+              <NavLink to="/restaurant" activeClassName="underline">Restaurants</NavLink>
+              </Box>
+              <Box className="targets">
+              <NavLink to="/community" activeClassName="underline">Community</NavLink>
+              </Box>
+              <Box className="targets">
+              <NavLink to="/help" activeClassName="underline">Help</NavLink>
               </Box>
             </Stack>
             <Stack className="find_us">
-              <Box className="find">Bizni top</Box>
+              <Box className="find">Find us</Box>
               <Box className="devider"></Box>
               <Stack className="details" sx={{ mt: "19px" }}>
                 <Box className="detail_one">L.</Box>
