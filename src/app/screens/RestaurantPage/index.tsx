@@ -1,9 +1,9 @@
 import React from "react";
-import { Container } from "@mui/material";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import ChoosenDish from "./choosenDish";
 import OneRestaurants from "./oneRestaurants";
 import AllRestaurants from "./allRestaurants";
+import "../../css/restaurant.css"
 
 export function RestaurantPage() {
   let restaurant = useRouteMatch();
