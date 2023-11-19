@@ -71,9 +71,9 @@ const Events = () => {
             pagination={{ el: ".swiper-pagination", clickable: true }}
             autoplay={{ delay: 2000, disableOnInteraction: true }}
           >
-            {events_list.map((value, number) => {
+            {events_list.map((value, id) => {
               return (
-                <SwiperSlide className="events_info_frame">
+                <SwiperSlide key={id} className="events_info_frame">
                   <div className="events_img">
                     <img src={value.img} className="events_img" alt="" />
                   </div>
