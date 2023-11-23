@@ -279,7 +279,7 @@ const OneRestaurants = () => {
           <Box className="category_title">Our Location</Box>
           <iframe
             style={{ marginTop: "60px" }}
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23973.186726434462!2d69.19028841955175!3d41.31651318207816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8be443f4f0a5%3A0x627521cc6eac641e!2sBesh%20Qozon%20Pilaf%20Center!5e0!3m2!1sen!2skr!4v1700354876685!5m2!1sen!2skr"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25871.195670343193!2d128.74769894999997!3d35.8514688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660c150b017f17%3A0x490a4eedabce466d!2sYeungnam%20University%20Museum!5e0!3m2!1sen!2skr!4v1700652660751!5m2!1sen!2skr"
             width={"1320"}
             height={"500"}
             referrerPolicy="no-referrer-when-downgrade"
