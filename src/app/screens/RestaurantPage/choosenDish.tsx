@@ -47,7 +47,7 @@ const ChoosenDish = () => {
             {choosen_dish.map((ele, index) => {
               const img_path = "/others/steak.png";
               return (
-                <SwiperSlide style={{ width: "100%", height: "100%" }}>
+                <SwiperSlide key={index} style={{ width: "100%", height: "100%" }}>
                   <img
                     style={{ width: "160px", height: "107px" }}
                     src={img_path}
