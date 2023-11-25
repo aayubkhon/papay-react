@@ -1,0 +1,227 @@
+.community_page {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: #0b0e11;
+}
+
+.community_page .community_all_frame {
+  margin-left: 30px;
+  width: 800px;
+  height: 1000px;
+  border-radius: 34px;
+}
+
+.community_frame .community_nav_frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #fff;
+}
+
+.community_frame .tab_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.community_page .chat_frame {
+  width: 33%;
+  height: 1000px;
+  background: #e3f2fd;
+  border-radius: 34px;
+  overflow: hidden;
+  border: 1px white solid;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: inline-flex;
+}
+
+.chat_frame .chat_top {
+  color: black;
+  font-size: 36px;
+  font-family: "Poppins";
+  font-weight: 700;
+  word-wrap: break-word;
+  text-align: center;
+  margin-left: 70px;
+  margin-top: 20px;
+}
+
+.chat_frame .chat_content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.chat_frame .chat_main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.chat_frame .msg_left {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-items: flex-start;
+  width: auto;
+  height: auto;
+}
+
+.chat_frame .msg_left_text {
+  background: rgba(228.44, 228.44, 228.44, 0.83);
+  color: #383737;
+  font-size: 16px;
+  font-family: "Poppins";
+  font-weight: 400;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.chat_frame .msg_right {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.chat_frame .msg_right_text {
+  color: #007665;
+  font-size: 16px;
+  font-family: "Poppins";
+  font-weight: 400;
+  background: #d0ece8;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 0px;
+  width: auto;
+  height: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.chat_frame .chatt_bott {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.chat_frame .msg_input {
+  width: 300px;
+  height: 50px;
+  background: #f7f7f6;
+  border-radius: 28px;
+  border: none;
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  font-family: "Poppins";
+  font-weight: 400;
+  padding-left: 25px;
+  margin-left: 10px;
+}
+
+.chat_frame .send_msg_btn {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(180deg, #55a99d 0%, #007665 100%);
+  border-radius: 9999px;
+  border: none;
+  margin-left: 25px;
+  cursor: pointer;
+}
+
+
+
+.community_page .all_article_box {
+  width: 100%;
+  height: 100%;
+  background: #182226;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.community_page .all_article_box .all_article_container{
+   display: flex;
+   flex-direction: column;
+}
+
+.community_page .all_article_img {
+  background-size: cover;
+  width: 150px;
+  height: 135px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.community_page .all_article_container .all_article_auth_user {
+  color: white;
+  font-size: 16px;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.community_page .all_article_container .all_evalution{
+   width: 150px;
+   display: flex;
+   flex-direction: column;
+}
+
+
+.community_page .all_article_container .all_article_title {
+  color: #e3c08d;
+  font-size: 22px;
+  font-family: "Poppins";
+  font-weight: 600;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.community_page .all_article_container .all_article_desc {
+  color: white;
+  font-size: 16px;
+  font-family: "Poppins";
+  font-weight: 400;
+  margin-left: 15px;
+}
+
+.community_page .all_article_icon{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 100px;
+   width: 100%;
+}
+
+.community_page .all_article_icon_items{
+  color: white;
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+   width: 70%;
+}
+
+.community_page .article_bott{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   border-top: 1px solid #fff;
+   margin-top: 50%;
+}
