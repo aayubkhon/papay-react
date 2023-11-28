@@ -11,8 +11,8 @@ import "../../css/community.css";
 import CommunitiChats from "./communitiChats";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import TargetArticles from "./targetArticles";
-import  ArrowBackIcon  from "@mui/icons-material/ArrowBack";
-import  ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const targetBoArticles = [1, 2, 3, 4, 5];
 
@@ -25,12 +25,12 @@ export function CommunityPage(props: any) {
     setValue(newValue);
   };
   const handlePaginationChange = (event: any, value: number) => {
-   console.log(value);
- };
+    console.log(value);
+  };
   return (
     <div className="community_page">
       <div className="community_frame">
-        <Container sx={{ mt: "50px", mb: "50px" }}>
+        <Container sx={{ mt: "50px", mb: "50px",ml:"65px" }}>
           <Stack flexDirection={"row"} justifyContent={"space-between"}>
             <CommunitiChats />
             <Stack
@@ -80,7 +80,8 @@ export function CommunityPage(props: any) {
                     count={5}
                     page={1}
                     renderItem={(item) => (
-                      <PaginationItem style={{color:"white"}}
+                      <PaginationItem
+                        style={{ color: "white" }}
                         components={{
                           previous: ArrowBackIcon,
                           next: ArrowForwardIcon,

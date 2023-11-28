@@ -4,10 +4,10 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import "../../css/orders.css";
-import ProcessOrders from "../../components/orders/processOrder";
-import PausedOrders from "../../components/orders/pausedorders";
+import ProcessOrders from "./orders/processOrder";
+import PausedOrders from "./orders/pausedorders";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import FinishedOrders from "../../components/orders/finishedOrders";
+import FinishedOrders from "./orders/finishedOrders";
 
 const OrdersPage = () => {
   // ** INITIALIZATION **//
