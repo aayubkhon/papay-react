@@ -17,10 +17,11 @@ import MemberFollowing from "./memberFollowing";
 import MySettings from "./mySettings";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Facebook, Instagram, Telegram, YouTube } from "@mui/icons-material";
+import TvIewer from "./TvIewer";
 
 const VisitOtherPage = () => {
   // ** INITIALIZATIONS **//
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("4");
 
   // ** HANDLERS **//
   const hendleChange = (event: any, newValue: string) => {
@@ -75,11 +76,13 @@ const VisitOtherPage = () => {
                     <MemberFollowing actions_enabled={false} />
                   </Box>
                 </TabPanel>
-                <TabPanel value={"5"}>
+                <TabPanel value={"4"}>
                   <Box className="menu_name">Tanlangan Maqola</Box>
-                  <Box></Box>
+                  <Box>
+                    <TvIewer text={`<h3>HELLO</h3>`} />
+                  </Box>
                 </TabPanel>
-                <TabPanel value={"6"}>
+                <TabPanel value={"5"}>
                   <Box className="menu_name">Malumotlarni Ozgartirish</Box>
                   <Box>
                     <MySettings />

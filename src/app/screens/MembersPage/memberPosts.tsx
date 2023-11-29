@@ -33,7 +33,7 @@ const MemberPosts = (props:any) => {
                   marginTop: "10px",
                 }}
               />
-              <span className="all_article_auth_user">MR.LEO</span>
+              <span className="all_article_auth_user">Karim Benzema</span>
             </Box>
             <Box
             className="all_evalution"

@@ -430,3 +430,15 @@
   height: 200px;
   background: #f6f6f6;
 }
+
+
+/* TuiEDitor start */
+
+.my_page .tuieditor_frame{
+  height: 800px;
+}
+.my_page .form_row{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}

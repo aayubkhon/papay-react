@@ -17,10 +17,12 @@ import MemberFollowing from "./memberFollowing";
 import MySettings from "./mySettings";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Facebook, Instagram, Telegram, YouTube } from "@mui/icons-material";
+import TuiEditor from "./tuiEditor";
+import TvIewer from "./TvIewer";
 
 const VisitMyPage = () => {
   // ** INITIALIZATIONS **//
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("5");
 
   // ** HANDLERS **//
   const hendleChange = (event: any, newValue: string) => {
@@ -77,11 +79,15 @@ const VisitMyPage = () => {
                 </TabPanel>
                 <TabPanel value={"4"}>
                   <Box className="menu_name">Maqola Yozish</Box>
-                  <Box></Box>
+                  <Box>
+                    <TuiEditor />
+                  </Box>
                 </TabPanel>
                 <TabPanel value={"5"}>
                   <Box className="menu_name">Tanlangan Maqola</Box>
-                  <Box></Box>
+                  <Box>
+                    <TvIewer text={`<h3>HELLO</h3>`} />
+                  </Box>
                 </TabPanel>
                 <TabPanel value={"6"}>
                   <Box className="menu_name">Malumotlarni Ozgartirish</Box>
