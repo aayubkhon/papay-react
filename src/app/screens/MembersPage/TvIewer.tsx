@@ -5,7 +5,8 @@ import React, { useEffect, useRef, useState } from "react";
 const TvIewer = (props: any) => {
   const editorRef = useRef();
   return (
-    <Stack sx={{ background: "white", mt: "30px", borderRadius: "10px" }}>
+   <Stack sx={{height:"600px"}}>
+     <Stack sx={{ background: "white", mt: "30px", borderRadius: "10px" }}>
       <Box sx={{ m: "40px" }}>
         <Viewer // @ts-ignore
           ref={editorRef}
@@ -15,6 +16,7 @@ const TvIewer = (props: any) => {
         />
       </Box>
     </Stack>
+   </Stack>
   );
 };
 
