@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./css/App.css";
 import "./css/navbar.css";
 import "./css/footer.css";
@@ -14,6 +14,7 @@ import { NavbarHome } from "./components/header";
 import { NavbarRestaurant } from "./components/header/restaurant";
 import { NavbarOthers } from "./components/header/others";
 import { Footer } from "./components/footer";
+import Car from "./screens/testCar";
 function App() {
   const [path, setPath] = useState();
   const main_path = window.location.pathname;
@@ -47,7 +48,8 @@ function App() {
           <LoginPage />
         </Route>
         <Route path="/">
-          <HomePage />
+          <Car/>
+          {/* <HomePage /> */}
         </Route>
       </Switch>
       <Footer/>

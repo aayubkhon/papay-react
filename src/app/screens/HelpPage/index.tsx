@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { ExpandMore } from "@mui/icons-material";
-import "../../css/help.css"
+import "../../css/help.css";
 
 export function HelpPage(props: any) {
   // ** INITIALIZATIONS ** //
@@ -75,85 +75,85 @@ export function HelpPage(props: any) {
     setValue(newValue);
   };
   return (
-   <div className="help_page">
-   <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
-     <TabContext value={value}>
-       <Box className="help_menu">
-         <Box className="help_menu_wrap">
-           <TabList
-             onChange={handleChange}
-             aria-label="lab API tabs example"
-             className="help_tablist"
-           >
-             <Tab label="Qoidalar" value={"1"} />
-             <Tab className="help_tab" label="FAQ" value={"2"} />
-             <Tab label="Adminga xat" value={"3"} />
-           </TabList>
-         </Box>
-       </Box>
-       <Stack className="help_main_content">
-         <TabPanel value="1">
-           <Stack className="theRules_box">
-             <Box className="theRules_frame">
-               {rules.map((ele, number) => {
-                 return (
-                   <p className="help_rules" key={number}>
-                     {ele}
-                   </p>
-                 );
-               })}
-             </Box>
-           </Stack>
-         </TabPanel>
-         <TabPanel value="2">
-           <Stack className="accordian_menu">
-             {FAQ.map((ele,) => {
-               return (
-                 <Accordion>
-                   <AccordionSummary
-                     expandIcon={<ExpandMore />}
-                     aria-controls="panella-content"
-                     id="panella-header"
-                   >
-                     <Typography className="ques_text">
-                       {ele.question}
-                     </Typography>
-                   </AccordionSummary>
-                   <AccordionDetails>
-                     <Typography>{ele.answer}</Typography>
-                   </AccordionDetails>
-                 </Accordion>
-               );
-             })}
-           </Stack>
-         </TabPanel>
-         <TabPanel value="3">
-           <Stack className="message_container">
-             <h2>Adminga Xabar Qoldirish</h2>
-             <p>
-               Assalomu alaykum! Adminga xabar qoldirish uchun pasdagi
-               formlarni to’ldiring!
-             </p>
-             <label>Ism</label>
-             <input type="text" placeholder="Oliver Queen" />
-             <label>Elektron Manzil</label>
-             <input type="mail" placeholder="email" />
-             <label>Xabar</label>
-             <textarea className="message_text" placeholder="Xabar" />
-             <Box className="btn_wrap">
-               <Button
-                 variant="contained"
-                 color="primary"
-                 className="send_btn"
-               >
-                 Jo'natish
-               </Button>
-             </Box>
-           </Stack>
-         </TabPanel>
-       </Stack>
-     </TabContext>
-   </Container>
- </div>
+    <div className="help_page">
+      <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
+        <TabContext value={value}>
+          <Box className="help_menu">
+            <Box className="help_menu_wrap">
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+                className="help_tablist"
+              >
+                <Tab label="Qoidalar" value={"1"} />
+                <Tab className="help_tab" label="FAQ" value={"2"} />
+                <Tab label="Adminga xat" value={"3"} />
+              </TabList>
+            </Box>
+          </Box>
+          <Stack className="help_main_content">
+            <TabPanel value="1">
+              <Stack className="theRules_box">
+                <Box className="theRules_frame">
+                  {rules.map((ele, number) => {
+                    return (
+                      <p className="help_rules" key={number}>
+                        {ele}
+                      </p>
+                    );
+                  })}
+                </Box>
+              </Stack>
+            </TabPanel>
+            <TabPanel value="2">
+              <Stack className="accordian_menu">
+                {FAQ.map((ele) => {
+                  return (
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<ExpandMore />}
+                        aria-controls="panella-content"
+                        id="panella-header"
+                      >
+                        <Typography className="ques_text">
+                          {ele.question}
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>{ele.answer}</Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  );
+                })}
+              </Stack>
+            </TabPanel>
+            <TabPanel value="3">
+              <Stack className="message_container">
+                <h2>Adminga Xabar Qoldirish</h2>
+                <p>
+                  Assalomu alaykum! Adminga xabar qoldirish uchun pasdagi
+                  formlarni to’ldiring!
+                </p>
+                <label>Ism</label>
+                <input type="text" placeholder="Oliver Queen" />
+                <label>Elektron Manzil</label>
+                <input type="mail" placeholder="email" />
+                <label>Xabar</label>
+                <textarea className="message_text" placeholder="Xabar" />
+                <Box className="btn_wrap">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="send_btn"
+                  >
+                    Jo'natish
+                  </Button>
+                </Box>
+              </Stack>
+            </TabPanel>
+          </Stack>
+        </TabContext>
+      </Container>
+    </div>
   );
 }
