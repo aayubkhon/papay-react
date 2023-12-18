@@ -48,8 +48,8 @@ function App() {
           <LoginPage />
         </Route>
         <Route path="/">
-          <Car/>
-          {/* <HomePage /> */}
+          {/* <Car/> */}
+          <HomePage />
         </Route>
       </Switch>
       <Footer/>
