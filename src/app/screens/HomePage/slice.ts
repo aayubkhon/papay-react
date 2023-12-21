@@ -3,7 +3,7 @@ import { HomePageState } from "../../types/screen";
 import BestRestaurants from "./bestRestaurants";
 
 const initialState: HomePageState = {
-  topRestaurants: [],
+  topRestaurants: [], 
   bestRestaurants: [],
   trendProducts: [],
   bestBorticles: [],
