@@ -7,6 +7,7 @@ import Events from "./events";
 import Recommendations from "./recommendations";
 import "../../css/home.css";
 import BestDishes from "./bestDishes";
+import RestaurantApiService from "../../apiServices/restaurantApiService";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -30,14 +31,17 @@ const topRestaurantRetriever = createSelector(
 const HomePage = () => {
   // **  INITIALIZATION */
   const { setTopRestaurants } = actionDispatch(useDispatch());
-  const { topRestaurants } = useSelector(topRestaurantRetriever);
-  
+
   // selector: => store data
   useEffect(() => {
     //beckend data request => data
-    const data: Restaurant[] = [
-    ];
-    setTopRestaurants(data)
+    const restaurantService = new RestaurantApiService();
+    restaurantService
+      .getRestaurants()
+      .then((data) => {
+        setTopRestaurants(data)
+      })
+      .catch((err) => console.log(err));
     // slice:data =>store
   }, []);
   return (
