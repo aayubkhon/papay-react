@@ -25,6 +25,7 @@ const topRestaurantRetriever = createSelector(
   })
 );
 const TopRestaurants = () => {
+  // **  INITIALIZATION */
   const { topRestaurants } = useSelector(topRestaurantRetriever);
   return (
     <div className="top_restaurant_frame">
@@ -98,7 +99,7 @@ const TopRestaurants = () => {
                               // ele?.me_liked && ele?.me_liked[0].my_favorite
                               //   ? "red"
                               //   : "white",
-                              "white",
+                              "white"
                           }}
                         />
                       </IconButton>

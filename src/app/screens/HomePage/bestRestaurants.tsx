@@ -14,7 +14,23 @@ import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import CallIcon from "@mui/icons-material/Call";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
+// REDUX
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveBestRestaurants } from "../../screens/HomePage/selector";
+import { Restaurant } from "../../types/user";
+import { serviceApi } from "../../../lib/config";
+
+// **  REDUX SELECTOR */
+const bestRestaurantRetriever = createSelector(
+  retrieveBestRestaurants,
+  (bestRestaurants) => ({
+    bestRestaurants,
+  })
+);
 const BestRestaurants = () => {
+  // **  INITIALIZATION */
+  const { bestRestaurants } = useSelector(bestRestaurantRetriever);
   return (
     <div className="best_restaurant_frame">
       <img
@@ -25,10 +41,15 @@ const BestRestaurants = () => {
       <Container sx={{ mt: "153px" }}>
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Box className="category_title">Best Restaurants</Box>
-          <Stack  flexDirection={"column"}
-          alignItems={"center"}
-          sx={{ mt: "45px" }}>
-            <CssVarsProvider>
+          <Stack
+            flexDirection={"row"}
+            alignItems={"center"}
+            sx={{ mt: "45px" }}
+          >
+           {bestRestaurants.map((ele:Restaurant)=>{
+              const image_path = `${serviceApi}/${ele.mb_image}`;
+            return(
+              <CssVarsProvider key={ele._id}>
               <Card
                 variant="outlined"
                 sx={{
@@ -40,7 +61,7 @@ const BestRestaurants = () => {
               >
                 <CardOverflow>
                   <AspectRatio ratio={1}>
-                    <img src="restaurant/girl.png" alt="" />
+                    <img src={image_path} alt="" />
                     <IconButton
                       aria-label="Like minimal photography"
                       size="md"
@@ -61,7 +82,7 @@ const BestRestaurants = () => {
                   </AspectRatio>
                 </CardOverflow>
                 <Typography level="h2" sx={{ fontSize: "md", mt: 2 }}>
-                  The Bruk Restaurants
+                  {ele.mb_nick}
                 </Typography>
                 <Typography level="title-sm" sx={{ mt: 0.1, mb: 2 }}>
                   <Link
@@ -69,7 +90,7 @@ const BestRestaurants = () => {
                     textColor={"neutral.700"}
                     startDecorator={<LocationOnRoundedIcon />}
                   >
-                    Turkey,Istanbul
+                   {ele.mb_adress}
                   </Link>
                 </Typography>
                 <Typography level="title-sm" sx={{ mt: 0.1, mb: 2 }}>
@@ -78,7 +99,7 @@ const BestRestaurants = () => {
                     textColor={"neutral.700"}
                     startDecorator={<CallIcon />}
                   >
-                    +998950010001
+                    {ele.mb_phone}
                   </Link>
                 </Typography>
                 <CardOverflow
@@ -116,7 +137,7 @@ const BestRestaurants = () => {
                         display: "flex",
                       }}
                     >
-                      100{" "}
+                      {ele.mb_views}
                       <VisibilityIcon
                         sx={{ fontSize: 20, marginLeft: "5px" }}
                       />
@@ -138,13 +159,15 @@ const BestRestaurants = () => {
                         display: "flex",
                       }}
                     >
-                      <div>500</div>
+                      <div>{ele.mb_likes}</div>
                       <Favorite sx={{ fontSize: 20, marginLeft: "5px" }} />
                     </Typography>
                   </Box>
                 </CardOverflow>
               </Card>
             </CssVarsProvider>
+            )
+           })}
           </Stack>
           <Stack
             flexDirection={"row"}
