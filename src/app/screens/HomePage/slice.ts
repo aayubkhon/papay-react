@@ -22,7 +22,7 @@ const HomePageSlice = createSlice({
       state.bestRestaurants = action.payload;
     },
     setTrendProducts: (state, action) => {
-      state.trendBoArticles = action.payload;
+      state.trendProducts = action.payload;
     },
     setBestBorticles: (state, action) => {
       state.bestBorticles = action.payload;

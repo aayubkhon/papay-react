@@ -13,7 +13,7 @@ export const retrieveBestRestaurants = createSelector(
 );
 export const retrieveTrendProducts = createSelector(
   selectHomePage,
-  (HomePage) => HomePage.trendBoArticles
+  (HomePage) => HomePage.trendProducts
 );
 export const retrieveBestBorticles = createSelector(
   selectHomePage,

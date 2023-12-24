@@ -3,3 +3,12 @@ export interface SearchObj {
   limit: number;
   order: string;
 }
+
+
+export interface ProductSearchObj {
+  page: number;
+  limit: number;
+  order: string;
+  restaurant_mb_id?:"",
+  product_collection?:"all"
+}
