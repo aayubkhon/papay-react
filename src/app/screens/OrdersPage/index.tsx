@@ -10,7 +10,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FinishedOrders from "./orders/finishedOrders";
 
 const OrdersPage = () => {
-  // ** INITIALIZATION **//
+  // ** INITIALIZATIONS **//
   const [value, setValue] = useState("1");
 
   // ** HANDLERS **//

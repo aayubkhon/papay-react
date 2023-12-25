@@ -17,7 +17,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 const targetBoArticles = [1, 2, 3, 4, 5];
 
 export function CommunityPage(props: any) {
-  // ** INITIALIZATION **//
+  // ** INITIALIZATIONS **//
   const [value, setValue] = useState("1");
 
   // ** HANDLERS **//

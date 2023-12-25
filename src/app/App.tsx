@@ -1,31 +1,53 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./css/App.css";
 import "./css/navbar.css";
 import "./css/footer.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { RestaurantPage } from "./screens/RestaurantPage";
 import { CommunityPage } from "./screens/CommunityPage";
-import  OrdersPage  from "./screens/OrdersPage";
+import OrdersPage from "./screens/OrdersPage";
 import { MembersPage } from "./screens/MembersPage";
 import { HelpPage } from "./screens/HelpPage";
 import { LoginPage } from "./screens/LoginPage";
-import  HomePage  from "./screens/HomePage";
+import HomePage from "./screens/HomePage";
 import { NavbarHome } from "./components/header";
 import { NavbarRestaurant } from "./components/header/restaurant";
 import { NavbarOthers } from "./components/header/others";
 import { Footer } from "./components/footer";
-import Car from "./screens/testCar";
+import AuthenticationModal from "./components/auth";
 function App() {
+  // **  INITIALIZATIONS */
   const [path, setPath] = useState();
   const main_path = window.location.pathname;
+  const [signUpOpen, setSignUpOpen] = useState(false);
+  const [loginOpne, setLoginOpen] = useState(false);
+
+  // * HANDLERS* //
+  const handleSignUpOpen = () => setSignUpOpen(true);
+  const handleSignUpClose = () => setSignUpOpen(false);
+  const handleLoginOpen = () => setLoginOpen(true);
+  const handleLoginClose = () => setLoginOpen(false);
+
   return (
     <Router>
       {main_path === "/" ? (
-        <NavbarHome setPath={setPath} />
+        <NavbarHome
+          setPath={setPath}
+          handleLoginOpen={handleLoginOpen}
+          handleSignUpOpen={handleSignUpOpen}
+        />
       ) : main_path.includes("/restaurant") ? (
-        <NavbarRestaurant setPath={setPath} />
+        <NavbarRestaurant
+          setPath={setPath}
+          handleLoginOpen={handleLoginOpen}
+          handleSignUpOpen={handleSignUpOpen}
+        />
       ) : (
-        <NavbarOthers setPath={setPath} />
+        <NavbarOthers
+          setPath={setPath}
+          handleLoginOpen={handleLoginOpen}
+          handleSignUpOpen={handleSignUpOpen}
+        />
       )}
 
       <Switch>
@@ -48,11 +70,18 @@ function App() {
           <LoginPage />
         </Route>
         <Route path="/">
-          {/* <Car/> */}
           <HomePage />
         </Route>
       </Switch>
-      <Footer/>
+      <Footer />
+      <AuthenticationModal
+        loginOpen={loginOpne}
+        handleLoginOpen={handleLoginOpen}
+        handleLoginClose={handleLoginClose}
+        signUpOpen={signUpOpen}
+        handleSignUpOpen={handleSignUpOpen}
+        handleSignUpClose={handleSignUpClose}
+      />
     </Router>
   );
 }

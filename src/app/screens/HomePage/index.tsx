@@ -28,7 +28,7 @@ const actionDispatch = (dispatch: Dispatch) => ({
 });
 
 const HomePage = () => {
-  // **  INITIALIZATION */
+  // **  INITIALIZATIONS */
   const { setTopRestaurants, setBestRestaurants } = actionDispatch(
     useDispatch()
   );

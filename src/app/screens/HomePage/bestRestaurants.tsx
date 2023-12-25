@@ -29,7 +29,7 @@ const bestRestaurantRetriever = createSelector(
   })
 );
 const BestRestaurants = () => {
-  // **  INITIALIZATION */
+  // **  INITIALIZATIONS */
   const { bestRestaurants } = useSelector(bestRestaurantRetriever);
   return (
     <div className="best_restaurant_frame">
