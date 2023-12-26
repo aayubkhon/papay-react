@@ -73,6 +73,27 @@ const AuthenticationModal = (props: any) => {
       sweetErrorhandling(err).then()
     }
   };
+
+  const handleSignUpRequest = async () => {
+    try {
+      const is_fulfiled = mb_nick !== "" && mb_password !== "";
+      assert.ok(is_fulfiled, Definer.input_err1);
+
+      const signup_data = {
+        mb_nick: mb_nick,
+        mb_phone:mb_phone,
+        mb_password: mb_password,
+      };
+      const memberApiService = new MemberApiService();
+      memberApiService.signUpRequest(signup_data)
+      props.handleSignUpClose();
+      // window.location.reload();
+    } catch (err) {
+      console.log(err);
+      props.handleLoginClose();
+      sweetErrorhandling(err).then()
+    }
+  };
   return (
     <div>
       {/* @ts-ignore */}
@@ -98,26 +119,27 @@ const AuthenticationModal = (props: any) => {
             <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
               <h2>SignUp Form</h2>
               <TextField
-                // onChange={}
+                onChange={handleUsername}
                 sx={{ marginTop: "7px" }}
                 id="outlined-basic"
                 label="username"
                 variant="outlined"
               />
               <TextField
-                // onChange={}
+                onChange={handlePhone}
                 sx={{ my: "17px" }}
                 id="outlined-basic"
                 label="phone number"
                 variant="outlined"
               />
               <TextField
-                // onChange={}
+                onChange={handlePassword}
                 id="outlined-basic"
                 label="password"
                 variant="outlined"
               />
               <Fab
+              onClick={handleSignUpRequest}
                 sx={{ marginTop: "30px", width: "120px" }}
                 variant="extended"
                 color="primary"
