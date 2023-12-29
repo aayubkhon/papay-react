@@ -16,7 +16,10 @@ import { createSelector } from "reselect";
 import { retrievetopRestaurants } from "../../screens/HomePage/selector";
 import { Restaurant } from "../../types/user";
 import { serverApi } from "../../../lib/config";
-import { sweetErrorhandling } from "../../../lib/sweetAlert";
+import {
+  sweetErrorhandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
@@ -53,6 +56,7 @@ const TopRestaurants = () => {
       } else {
         e.target.style.fill = "white";
         refs.current[like_result.like_ref_id].innerHTML--;
+        await sweetTopSmallSuccessAlert("success", 700, false);
       }
     } catch (err: any) {
       console.log("targetLikeTop,ERROR:", err);
@@ -124,6 +128,9 @@ const TopRestaurants = () => {
                           bottom: 45,
                           transform: "translateY(50%)",
                           color: "rgba(0,0,0,.4)",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
                         }}
                       >
                         <Favorite

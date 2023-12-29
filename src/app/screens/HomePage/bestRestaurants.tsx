@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Favorite } from "@mui/icons-material";
 import {
   AspectRatio,
@@ -20,6 +20,14 @@ import { createSelector } from "reselect";
 import { retrieveBestRestaurants } from "../../screens/HomePage/selector";
 import { Restaurant } from "../../types/user";
 import { serverApi } from "../../../lib/config";
+import assert from "assert";
+import MemberApiService from "../../apiServices/memberApiService";
+import { Definer } from "../../../lib/Definer";
+import {
+  sweetErrorhandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
+import { useHistory } from "react-router-dom";
 
 // **  REDUX SELECTOR */
 const bestRestaurantRetriever = createSelector(
@@ -30,7 +38,36 @@ const bestRestaurantRetriever = createSelector(
 );
 const BestRestaurants = () => {
   // **  INITIALIZATIONS */
+  const refs: any = useRef([]);
+  const history = useHistory();
   const { bestRestaurants } = useSelector(bestRestaurantRetriever);
+
+  // * HANDLERS* //
+  const chosenRestaurantHandlar = (id: any) => {
+    history.push(`/restaurant/${id}`);
+  };
+  const goRestaurantsHandler = () => history.push("/restaurant")
+  const targetLikeBest = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const memberService = new MemberApiService(),
+        like_result = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "white";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+      await sweetTopSmallSuccessAlert("success", 700, false);
+    } catch (err: any) {
+      console.log("targetLikeTop,ERROR:", err);
+      sweetErrorhandling(err).then();
+    }
+  };
   return (
     <div className="best_restaurant_frame">
       <img
@@ -51,6 +88,7 @@ const BestRestaurants = () => {
               return (
                 <CssVarsProvider key={ele._id}>
                   <Card
+                    onClick={() => chosenRestaurantHandlar(ele._id)}
                     variant="outlined"
                     sx={{
                       minHeight: 483,
@@ -63,30 +101,33 @@ const BestRestaurants = () => {
                       <AspectRatio ratio={1}>
                         <img src={image_path} alt="" />
                         <IconButton
-                        aria-label="Like minimal photography"
-                        size="md"
-                        variant="solid"
-                        color="neutral"
-                        sx={{
-                          position: "absolute",
-                          zIndex: 2,
-                          borderRadius: "50%",
-                          right: "1rem",
-                          bottom: 0,
-                          transform: "translateY(50%)",
-                          color: "rgba(0,0,0,.4)",
-
-                        }}
-                      >
-                        <Favorite
-                          style={{
-                            fill:
-                              ele?.me_liked && ele?.me_liked[0]?.my_favorite
-                                ? "red"
-                                : "white",
+                          aria-label="Like minimal photography"
+                          size="md"
+                          variant="solid"
+                          color="neutral"
+                          sx={{
+                            position: "absolute",
+                            zIndex: 2,
+                            borderRadius: "50%",
+                            right: "1rem",
+                            bottom: 0,
+                            transform: "translateY(50%)",
+                            color: "rgba(0,0,0,.4)",
                           }}
-                        />
-                      </IconButton>
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          <Favorite
+                            onClick={(e) => targetLikeBest(e, ele._id)}
+                            style={{
+                              fill:
+                                ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                  ? "red"
+                                  : "white",
+                            }}
+                          />
+                        </IconButton>
                       </AspectRatio>
                     </CardOverflow>
                     <Typography level="h2" sx={{ fontSize: "md", mt: 2 }}>
@@ -119,7 +160,6 @@ const BestRestaurants = () => {
                         borderTop: "1px solid",
                       }}
                     >
-                     
                       <Box sx={{ display: "flex", flexDirection: "row" }}>
                         <Typography
                           level="title-md"
@@ -151,7 +191,11 @@ const BestRestaurants = () => {
                             display: "flex",
                           }}
                         >
-                          <div>{ele.mb_likes}</div>
+                          <div
+                            ref={(element) => (refs.current[ele._id] = element)}
+                          >
+                            {ele.mb_likes}
+                          </div>
                           <Favorite sx={{ fontSize: 20, marginLeft: "5px" }} />
                         </Typography>
                       </Box>
@@ -166,7 +210,7 @@ const BestRestaurants = () => {
             justifyContent={"flex-end"}
             sx={{ width: "100%", mt: "16px" }}
           >
-            <Button style={{ background: "#1976d2", color: "white" }}>
+            <Button style={{ background: "#1976d2", color: "white" }} onClick={goRestaurantsHandler}>
               BARCHASINI KO’RISH
             </Button>
           </Stack>

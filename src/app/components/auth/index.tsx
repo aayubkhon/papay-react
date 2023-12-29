@@ -9,7 +9,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
-import {sweetErrorhandling} from "../../../lib/sweetAlert"
+import { sweetErrorhandling } from "../../../lib/sweetAlert";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -56,7 +56,7 @@ const AuthenticationModal = (props: any) => {
 
   const handleLoginRequest = async () => {
     try {
-      const is_fulfiled = mb_nick !== "" && mb_password !== "";
+      const is_fulfiled = mb_nick != "" && mb_password != "";
       assert.ok(is_fulfiled, Definer.input_err1);
 
       const login_data = {
@@ -64,34 +64,34 @@ const AuthenticationModal = (props: any) => {
         mb_password: mb_password,
       };
       const memberApiService = new MemberApiService();
-      memberApiService.loginRequest(login_data);
+      await memberApiService.loginRequest(login_data);
       props.handleLoginClose();
-      // window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.log(err);
       props.handleLoginClose();
-      sweetErrorhandling(err).then()
+      sweetErrorhandling(err).then();
     }
   };
 
   const handleSignUpRequest = async () => {
     try {
-      const is_fulfiled = mb_nick !== "" && mb_password !== "";
+      const is_fulfiled = mb_nick != "" && mb_password != "" && mb_phone != 0;
       assert.ok(is_fulfiled, Definer.input_err1);
 
       const signup_data = {
         mb_nick: mb_nick,
-        mb_phone:mb_phone,
+        mb_phone: mb_phone,
         mb_password: mb_password,
       };
       const memberApiService = new MemberApiService();
-      memberApiService.signUpRequest(signup_data)
+      await memberApiService.signUpRequest(signup_data);
+
       props.handleSignUpClose();
-      // window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.log(err);
-      props.handleLoginClose();
-      sweetErrorhandling(err).then()
+      sweetErrorhandling(err).then();
     }
   };
   return (
@@ -139,7 +139,7 @@ const AuthenticationModal = (props: any) => {
                 variant="outlined"
               />
               <Fab
-              onClick={handleSignUpRequest}
+                onClick={handleSignUpRequest}
                 sx={{ marginTop: "30px", width: "120px" }}
                 variant="extended"
                 color="primary"
