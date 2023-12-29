@@ -10,14 +10,12 @@ import BestDishes from "./bestDishes";
 import RestaurantApiService from "../../apiServices/restaurantApiService";
 
 // REDUX
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
 import {
   setTopRestaurants,
   setBestRestaurants,
 } from "../../screens/HomePage/slice";
-import { retrievetopRestaurants } from "../../screens/HomePage/selector";
 import { Restaurant } from "../../types/user";
 
 // **  REDUX SLICE */

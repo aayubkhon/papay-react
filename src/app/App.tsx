@@ -81,7 +81,7 @@ function App() {
           handleLoginOpen={handleLoginOpen}
           handleSignUpOpen={handleSignUpOpen}
           anchorEl={anchorEl}
-          open={anchorEl}
+          open={open}
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogoutRequest={handleLogoutRequest}
@@ -93,7 +93,7 @@ function App() {
           handleLoginOpen={handleLoginOpen}
           handleSignUpOpen={handleSignUpOpen}
           anchorEl={anchorEl}
-          open={anchorEl}
+          open={open}
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogoutRequest={handleLogoutRequest}
@@ -106,7 +106,7 @@ function App() {
           handleLoginOpen={handleLoginOpen}
           handleLogOutClick={handleLogOutClick}
           anchorEl={anchorEl}
-          open={anchorEl}
+          open={open}
           handleCloseLogOut={handleCloseLogOut}
           handleSignUpOpen={handleSignUpOpen}
           handleLogoutRequest={handleLogoutRequest}

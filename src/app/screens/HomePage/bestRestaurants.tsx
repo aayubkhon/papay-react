@@ -46,128 +46,120 @@ const BestRestaurants = () => {
             alignItems={"center"}
             sx={{ mt: "45px" }}
           >
-           {bestRestaurants.map((ele:Restaurant)=>{
+            {bestRestaurants.map((ele: Restaurant) => {
               const image_path = `${serverApi}/${ele.mb_image}`;
-            return(
-              <CssVarsProvider key={ele._id}>
-              <Card
-                variant="outlined"
-                sx={{
-                  minHeight: 483,
-                  minWidth: 320,
-                  mr: "35px",
-                  cursor: "pointer",
-                }}
-              >
-                <CardOverflow>
-                  <AspectRatio ratio={1}>
-                    <img src={image_path} alt="" />
-                    <IconButton
-                      aria-label="Like minimal photography"
-                      size="md"
-                      variant="solid"
-                      color="neutral"
-                      sx={{
-                        position: "absolute",
-                        zIndex: 2,
-                        borderRadius: "50%",
-                        right: "1rem",
-                        bottom: 0,
-                        transform: "translateY(50%)",
-                        color: "rgba(0,0,0,.4)",
-                      }}
-                    >
-                      <Favorite style={{ fill: "white" }} />
-                    </IconButton>
-                  </AspectRatio>
-                </CardOverflow>
-                <Typography level="h2" sx={{ fontSize: "md", mt: 2 }}>
-                  {ele.mb_nick}
-                </Typography>
-                <Typography level="title-sm" sx={{ mt: 0.1, mb: 2 }}>
-                  <Link
-                    href=""
-                    textColor={"neutral.700"}
-                    startDecorator={<LocationOnRoundedIcon />}
-                  >
-                   {ele.mb_adress}
-                  </Link>
-                </Typography>
-                <Typography level="title-sm" sx={{ mt: 0.1, mb: 2 }}>
-                  <Link
-                    href=""
-                    textColor={"neutral.700"}
-                    startDecorator={<CallIcon />}
-                  >
-                    {ele.mb_phone}
-                  </Link>
-                </Typography>
-                <CardOverflow
-                  sx={{
-                    display: "flex",
-                    gap: 1.5,
-                    py: 1.5,
-                    px: "var(--Card-padding)",
-                    borderTop: "1px solid",
-                  }}
-                >
-                  <IconButton
-                    aria-label="Like minimal photography"
-                    size="md"
-                    variant="solid"
-                    color="neutral"
+              return (
+                <CssVarsProvider key={ele._id}>
+                  <Card
+                    variant="outlined"
                     sx={{
-                      position: "absolute",
-                      zIndex: 2,
-                      borderRadius: "50%",
-                      right: "1rem",
-                      bottom: 45,
-                      transform: "translateY(50%)",
-                      color: "rgba(0,0,0,.4)",
+                      minHeight: 483,
+                      minWidth: 320,
+                      mr: "35px",
+                      cursor: "pointer",
                     }}
                   >
-                    <Favorite style={{ fill: "white" }} />
-                  </IconButton>
-                  <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <Typography
-                      level="title-md"
+                    <CardOverflow>
+                      <AspectRatio ratio={1}>
+                        <img src={image_path} alt="" />
+                        <IconButton
+                        aria-label="Like minimal photography"
+                        size="md"
+                        variant="solid"
+                        color="neutral"
+                        sx={{
+                          position: "absolute",
+                          zIndex: 2,
+                          borderRadius: "50%",
+                          right: "1rem",
+                          bottom: 0,
+                          transform: "translateY(50%)",
+                          color: "rgba(0,0,0,.4)",
+
+                        }}
+                      >
+                        <Favorite
+                          style={{
+                            fill:
+                              ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                ? "red"
+                                : "white",
+                          }}
+                        />
+                      </IconButton>
+                      </AspectRatio>
+                    </CardOverflow>
+                    <Typography level="h2" sx={{ fontSize: "md", mt: 2 }}>
+                      {ele.mb_nick}
+                    </Typography>
+                    <Typography level="title-sm" sx={{ mt: 0.1, mb: 2 }}>
+                      <Link
+                        href=""
+                        textColor={"neutral.700"}
+                        startDecorator={<LocationOnRoundedIcon />}
+                      >
+                        {ele.mb_adress}
+                      </Link>
+                    </Typography>
+                    <Typography level="title-sm" sx={{ mt: 0.1, mb: 2 }}>
+                      <Link
+                        href=""
+                        textColor={"neutral.700"}
+                        startDecorator={<CallIcon />}
+                      >
+                        {ele.mb_phone}
+                      </Link>
+                    </Typography>
+                    <CardOverflow
                       sx={{
-                        fontWeight: "md",
-                        alignItems: "center",
                         display: "flex",
+                        gap: 1.5,
+                        py: 1.5,
+                        px: "var(--Card-padding)",
+                        borderTop: "1px solid",
                       }}
                     >
-                      {ele.mb_views}
-                      <VisibilityIcon
-                        sx={{ fontSize: 20, marginLeft: "5px" }}
-                      />
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: 2,
-                        height: 20,
-                        bgcolor: "divider",
-                        margin: " 0 10px",
-                        color: "text.secondary",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontWeight: "md",
-                        color: "text.secondary",
-                        alignItems: "center",
-                        display: "flex",
-                      }}
-                    >
-                      <div>{ele.mb_likes}</div>
-                      <Favorite sx={{ fontSize: 20, marginLeft: "5px" }} />
-                    </Typography>
-                  </Box>
-                </CardOverflow>
-              </Card>
-            </CssVarsProvider>
-            )
-           })}
+                     
+                      <Box sx={{ display: "flex", flexDirection: "row" }}>
+                        <Typography
+                          level="title-md"
+                          sx={{
+                            fontWeight: "md",
+                            alignItems: "center",
+                            display: "flex",
+                          }}
+                        >
+                          {ele.mb_views}
+                          <VisibilityIcon
+                            sx={{ fontSize: 20, marginLeft: "5px" }}
+                          />
+                        </Typography>
+                        <Box
+                          sx={{
+                            width: 2,
+                            height: 20,
+                            bgcolor: "divider",
+                            margin: " 0 10px",
+                            color: "text.secondary",
+                          }}
+                        />
+                        <Typography
+                          sx={{
+                            fontWeight: "md",
+                            color: "text.secondary",
+                            alignItems: "center",
+                            display: "flex",
+                          }}
+                        >
+                          <div>{ele.mb_likes}</div>
+                          <Favorite sx={{ fontSize: 20, marginLeft: "5px" }} />
+                        </Typography>
+                      </Box>
+                    </CardOverflow>
+                  </Card>
+                </CssVarsProvider>
+              );
+            })}
           </Stack>
           <Stack
             flexDirection={"row"}

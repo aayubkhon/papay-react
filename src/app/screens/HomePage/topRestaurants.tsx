@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
@@ -16,6 +16,11 @@ import { createSelector } from "reselect";
 import { retrievetopRestaurants } from "../../screens/HomePage/selector";
 import { Restaurant } from "../../types/user";
 import { serverApi } from "../../../lib/config";
+import { sweetErrorhandling } from "../../../lib/sweetAlert";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+import { useHistory } from "react-router-dom";
 
 // **  REDUX SELECTOR */
 const topRestaurantRetriever = createSelector(
@@ -26,7 +31,34 @@ const topRestaurantRetriever = createSelector(
 );
 const TopRestaurants = () => {
   // **  INITIALIZATIONS */
+  const history = useHistory();
   const { topRestaurants } = useSelector(topRestaurantRetriever);
+  const refs: any = useRef([]);
+
+  // * HANDLERS* //
+  const chosenRestaurantHandlar = (id: any) => {
+    history.push(`/restaurant/${id}`);
+  };
+  const targetLikeTop = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const memberService = new MemberApiService(),
+        like_result = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "white";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+    } catch (err: any) {
+      console.log("targetLikeTop,ERROR:", err);
+      sweetErrorhandling(err).then();
+    }
+  };
   return (
     <div className="top_restaurant_frame">
       <Container>
@@ -42,6 +74,7 @@ const TopRestaurants = () => {
               return (
                 <CssVarsProvider key={ele._id}>
                   <Card
+                    onClick={() => chosenRestaurantHandlar(ele._id)}
                     sx={{
                       minHeight: 430,
                       width: 325,
@@ -94,6 +127,7 @@ const TopRestaurants = () => {
                         }}
                       >
                         <Favorite
+                          onClick={(e) => targetLikeTop(e, ele._id)}
                           style={{
                             fill:
                               ele?.me_liked && ele?.me_liked[0]?.my_favorite
@@ -137,7 +171,11 @@ const TopRestaurants = () => {
                             display: "flex",
                           }}
                         >
-                          <div>{ele.mb_likes}</div>
+                          <div
+                            ref={(element) => (refs.current[ele._id] = element)}
+                          >
+                            {ele.mb_likes}
+                          </div>
                           <Favorite
                             sx={{
                               fontSize: 20,

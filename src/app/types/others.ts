@@ -12,3 +12,10 @@ export interface ProductSearchObj {
   restaurant_mb_id?:"",
   product_collection?:"all"
 }
+
+export interface MemberLiken{
+  like_group:string,
+  like_status:number,
+  like_ref_id:string
+
+}
