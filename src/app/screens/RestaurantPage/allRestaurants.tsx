@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Pagination from "@mui/material/Pagination";
@@ -17,8 +17,49 @@ import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import CallIcon from "@mui/icons-material/Call";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+
+// REDUX
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Restaurant } from "../../types/user";
+import { serverApi } from "../../../lib/config";
+import {
+  sweetErrorhandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+import { useHistory } from "react-router-dom";
+import { retrieveTargetRestaurants } from "./selector";
+import { setTargetRestaurants } from "./slice";
 const order_list = Array.from(Array(8).keys());
+
+// **  REDUX SLICE */
+const actionDispatch = (dispatch: Dispatch) => ({
+  setTargetRestaurants: (data: Restaurant[]) =>
+    dispatch(setTargetRestaurants(data)),
+});
+
+// **  REDUX SELECTOR */
+const TargetRestaurantsRetriever = createSelector(
+  retrieveTargetRestaurants,
+  (targetRestaurants) => ({
+    targetRestaurants,
+  })
+);
 const AllRestaurants = () => {
+  // **  INITIALIZATIONS */
+  const { setTargetRestaurants } = actionDispatch(useDispatch());
+  const { targetRestaurants } = useSelector(TargetRestaurantsRetriever);
+
+  useEffect(() => {
+  
+    
+  }, [])
+  
   return (
     <div className="all_restaurant">
       <Container>
@@ -163,7 +204,7 @@ const AllRestaurants = () => {
 
           <Stack className="bottom_box">
             <img
-            alt=""
+              alt=""
               className="design_img"
               src="/icons/line.svg"
               style={{ transform: "matrix(1, 0, 0, -1, 0, 0)" }}
@@ -183,7 +224,7 @@ const AllRestaurants = () => {
               )}
             />
             <img
-            alt=""
+              alt=""
               className="design_img"
               src="/icons/line.svg"
               style={{ transform: "rotate(180deg)" }}
