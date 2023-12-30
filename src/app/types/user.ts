@@ -8,7 +8,7 @@ export interface Restaurant {
   mb_password: string;
   mb_type: string;
   mb_status: string;
-  mb_adress: string;
+  mb_address: string;
   mb_description: string;
   mb_image: string;
   mb_point: number;
@@ -18,8 +18,9 @@ export interface Restaurant {
   mb_follow_cnt: number;
   mb_subscriber_cnt: number;
   createdAt: Date;
-  me_liked: MeLiked[]; //Me liked
+  me_liked: MeLiked[]; //meliked
 }
+
 export interface Member {
   _id: string;
   mb_nick: string;
@@ -27,16 +28,16 @@ export interface Member {
   mb_password: string;
   mb_type: string;
   mb_status: string;
-  mb_adress?: string;
+  mb_address: string;
   mb_description?: string;
-  mb_image?: string;
-  mb_point?: number;
-  mb_top?: string;
+  mb_image: string;
+  mb_point: number;
+  mb_top: string;
   mb_views: number;
   mb_likes: number;
   mb_follow_cnt: number;
   mb_subscriber_cnt: number;
   createdAt: Date;
-  me_liked: MeLiked[]; //Me liked
-  mb_followed: MeFollowed[]; //MeFollowed
+  me_liked: []; //meliked
+  me_followed: MeFollowed[];
 }

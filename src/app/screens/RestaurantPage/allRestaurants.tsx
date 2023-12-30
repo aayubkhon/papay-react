@@ -17,6 +17,8 @@ import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import CallIcon from "@mui/icons-material/Call";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { SearchObj } from "../../types/others";
+import RestaurantApiService from "../../apiServices/restaurantApiService";
 
 // REDUX
 import { useDispatch } from "react-redux";
@@ -35,8 +37,6 @@ import MemberApiService from "../../apiServices/memberApiService";
 import { useHistory } from "react-router-dom";
 import { retrieveTargetRestaurants } from "./selector";
 import { setTargetRestaurants } from "./slice";
-import { SearchObj } from "../../types/others";
-import RestaurantApiService from "../../apiServices/restaurantApiService";
 
 // **  REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -66,10 +66,11 @@ const AllRestaurants = () => {
   useEffect(() => {
     const restaurantService = new RestaurantApiService();
     restaurantService
-      .getRestaurants(targetSearchObject)
-      .then((data) => setTargetRestaurants(data))
-      .catch((err) => console.log(err));
+    .getRestaurants(targetSearchObject).then(data => {
+      setTargetRestaurants(data)
+  }).catch(err => console.log(err))
   }, [targetSearchObject]);
+  
   // HANDLERS
   const searchHandler = (category: string) => {
     targetSearchObject.page = 1;
@@ -81,7 +82,7 @@ const AllRestaurants = () => {
     setTargetSearchObject({ ...targetSearchObject });
   };
 
-  const chosenRestaurantHandlar = (id: any) => {
+  const chosenRestaurantHandlar = (id: string) => {
     history.push(`/restaurant/${id}`);
   };
   const targetLikeHandler = async (e: any, id: string) => {
@@ -140,12 +141,14 @@ const AllRestaurants = () => {
                 const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
                   <Card
+                    onClick={() => chosenRestaurantHandlar(ele._id)}
                     variant="outlined"
                     sx={{
                       minHeight: 410,
                       minWidth: 290,
                       mx: "17px",
                       my: "20px",
+                      cursor: "pointer",
                     }}
                   >
                     <CardOverflow>
@@ -190,7 +193,7 @@ const AllRestaurants = () => {
                         startDecorator={<LocationOnRoundedIcon />}
                         textColor="neutral.700"
                       >
-                        {ele.mb_adress}
+                        {ele.mb_address}
                       </Link>
                     </Typography>
                     <Typography level="body-md" sx={{ mt: 0, mb: 1 }}>

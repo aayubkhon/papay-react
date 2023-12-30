@@ -14,7 +14,7 @@ export const retrieveTargetRestaurants= createSelector(
    selectRestaurantPage,
    (RestaurantPage) => RestaurantPage.chosenRestaurant
  );
- export const retrieveTargetProductc= createSelector(
+ export const retrieveTargetProducts= createSelector(
    selectRestaurantPage,
    (RestaurantPage) => RestaurantPage.targetProducts
  );

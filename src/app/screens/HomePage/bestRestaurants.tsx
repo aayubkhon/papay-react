@@ -139,7 +139,7 @@ const BestRestaurants = () => {
                         textColor={"neutral.700"}
                         startDecorator={<LocationOnRoundedIcon />}
                       >
-                        {ele.mb_adress}
+                        {ele.mb_address}
                       </Link>
                     </Typography>
                     <Typography level="title-sm" sx={{ mt: 0.1, mb: 2 }}>

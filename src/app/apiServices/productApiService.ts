@@ -17,7 +17,7 @@ class ProductApiService {
         withCredentials: true,
       });
       assert.ok(result, Definer.general_err1);
-      console.log("state:", result.data.data);
+      console.log("state:", result.data.state);
       const product: Product[] = result.data.data;
       return product;
     } catch (err: any) {

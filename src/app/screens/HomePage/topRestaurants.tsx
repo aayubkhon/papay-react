@@ -103,7 +103,7 @@ const TopRestaurants = () => {
                         startDecorator={<LocationOnRoundedIcon />}
                         textColor="neutral.300"
                       >
-                        {ele.mb_adress}
+                        {ele.mb_address}
                       </Typography>
                     </CardContent>
                     <CardOverflow
