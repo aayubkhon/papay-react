@@ -41,6 +41,7 @@ import {
 } from "./slice";
 import ProductApiService from "../../apiServices/productApiService";
 import { Product } from "../../types/product";
+import RestaurantApiService from "../../apiServices/restaurantApiService";
 
 // **  REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -71,7 +72,7 @@ const targetProductsRetriever = createSelector(
   })
 );
 
-//   // * HANDLERS* //
+// * HANDLERS* //
 
 const OneRestaurants = () => {
   // **  INITIALIZATIONS */
@@ -92,12 +93,26 @@ const OneRestaurants = () => {
       product_collection: "dish",
     });
   useEffect(() => {
+    const restaurantService = new RestaurantApiService();
+    restaurantService
+      .getRestaurants({ page: 1, limit: 10, order: "random" })
+      .then((data) => setRandomRestaurants(data))
+      .catch((err) => console.log(err));
     const productService = new ProductApiService();
     productService
       .getTargetProducts(targetProductSearchObj)
       .then((data) => setTargetProducts(data))
       .catch((err) => console.log(err));
   }, [targetProductSearchObj]);
+  
+  const history = useHistory();
+  // * HANDLERS* //
+  const chosenRestaurantHandler = (id: string) => {
+    setChosenRestaurantId(id);
+    targetProductSearchObj.restaurant_mb_id = id;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+    history.push(`/restaurant/${id}`);
+  };
   return (
     <div className="single_restaurant">
       <Container>
@@ -144,6 +159,21 @@ const OneRestaurants = () => {
                 prevEl: ".restaurant-prev",
               }}
             >
+              {randomRandomRestaurant.map((ele: Restaurant) => {
+                const image_path = `${serverApi}/${ele.mb_image}`;
+
+                return (
+                  <SwiperSlide
+                    onClick={() => chosenRestaurantHandler(ele._id)}
+                    className="restaurant_avatars"
+                    style={{ cursor: "pointer" }}
+                    key={ele._id}
+                  >
+                    <img src={image_path} />
+                    <span>{ele.mb_nick}</span>
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
             <Box
               className="next_btn restaurant-next"
@@ -223,7 +253,10 @@ const OneRestaurants = () => {
                         className="like_view_btn"
                         style={{ left: "36px" }}
                       >
-                        <Badge badgeContent={product.product_likes} color="primary">
+                        <Badge
+                          badgeContent={product.product_likes}
+                          color="primary"
+                        >
                           <Checkbox
                             icon={<FavoriteBorder style={{ color: "white" }} />}
                             id={product._id}
