@@ -61,8 +61,8 @@ const randomRestaurantsRetriever = createSelector(
 );
 const chosenRestaurantsRetriever = createSelector(
   retrieveChosenRestaurant,
-  (chosenChosenRestaurant) => ({
-    chosenChosenRestaurant,
+  (chosenRestaurant) => ({
+    chosenRestaurant,
   })
 );
 const targetProductsRetriever = createSelector(
@@ -80,7 +80,7 @@ const OneRestaurants = () => {
   const { setRandomRestaurants, setChosenRestaurants, setTargetProducts } =
     actionDispatch(useDispatch());
   const { randomRandomRestaurant } = useSelector(randomRestaurantsRetriever);
-  const { chosenChosenRestaurant } = useSelector(chosenRestaurantsRetriever);
+  const { chosenRestaurant } = useSelector(chosenRestaurantsRetriever);
   const { targetProducts } = useSelector(targetProductsRetriever);
   const [chosenRestaurantId, setChosenRestaurantId] =
     useState<string>(restaurant_id);
@@ -92,6 +92,9 @@ const OneRestaurants = () => {
       restaurant_mb_id: restaurant_id,
       product_collection: "dish",
     });
+
+    const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+
   useEffect(() => {
     const restaurantService = new RestaurantApiService();
     restaurantService
@@ -103,8 +106,8 @@ const OneRestaurants = () => {
       .getTargetProducts(targetProductSearchObj)
       .then((data) => setTargetProducts(data))
       .catch((err) => console.log(err));
-  }, [targetProductSearchObj]);
-  
+  }, [targetProductSearchObj,productRebuild]);
+
   const history = useHistory();
   // * HANDLERS* //
   const chosenRestaurantHandler = (id: string) => {
@@ -112,6 +115,36 @@ const OneRestaurants = () => {
     targetProductSearchObj.restaurant_mb_id = id;
     setTargetProductSearchObj({ ...targetProductSearchObj });
     history.push(`/restaurant/${id}`);
+  };
+
+  const searchCollectionHandler = (collection: string) => {
+    targetProductSearchObj.page = 1;
+    targetProductSearchObj.product_collection = collection;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+  };
+
+  const searchOrderHandler = (order: string) => {
+    targetProductSearchObj.page = 1;
+    targetProductSearchObj.order = order;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+  };
+
+  const chosenDishHandler = (id: string) => {
+    history.push(`/restaurant/dish/${id}`);
+  };
+  const targetLikeProduct = async (e: any) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const memberService = new MemberApiService();
+      const data = { like_ref_id: e.target.id, group_type: "product" };
+      const like_result: any = await memberService.memberLikeTarget(data);
+      assert.ok(like_result, Definer.general_err1);
+      await sweetTopSmallSuccessAlert("success", 700, false);
+      setProductRebuild(new Date())
+    } catch (err: any) {
+      console.log("targetLikeProduct, ERROR:::", err);
+      sweetErrorhandling(err).then();
+    }
   };
   return (
     <div className="single_restaurant">
@@ -191,16 +224,32 @@ const OneRestaurants = () => {
             sx={{ mt: "65px" }}
           >
             <Box className="dishs_filter_box">
-              <Button variant="contained" color="secondary">
+              <Button
+                onClick={() => searchOrderHandler("createdAt")}
+                variant="contained"
+                color="secondary"
+              >
                 new
               </Button>
-              <Button variant="contained" color="secondary">
+              <Button
+                onClick={() => searchOrderHandler("product_price")}
+                variant="contained"
+                color="secondary"
+              >
                 price
               </Button>
-              <Button variant="contained" color="secondary">
+              <Button
+                onClick={() => searchOrderHandler("product_likes")}
+                variant="contained"
+                color="secondary"
+              >
                 likes
               </Button>
-              <Button variant="contained" color="secondary">
+              <Button
+                onClick={() => searchOrderHandler("product_views")}
+                variant="contained"
+                color="secondary"
+              >
                 views
               </Button>
             </Box>
@@ -216,19 +265,39 @@ const OneRestaurants = () => {
           >
             <Stack className="dish_category_box">
               <div className="dish_category_main">
-                <Button variant="contained" color="secondary">
+                <Button
+                  onClick={() => searchCollectionHandler("etc")}
+                  variant="contained"
+                  color="secondary"
+                >
                   boshqa
                 </Button>
-                <Button variant="contained" color="secondary">
-                  desert
+                <Button
+                  onClick={() => searchCollectionHandler("dessert")}
+                  variant="contained"
+                  color="secondary"
+                >
+                  dessert
                 </Button>
-                <Button variant="contained" color="secondary">
+                <Button
+                  onClick={() => searchCollectionHandler("drink")}
+                  variant="contained"
+                  color="secondary"
+                >
                   ichimlik
                 </Button>
-                <Button variant="contained" color="secondary">
+                <Button
+                  onClick={() => searchCollectionHandler("salad")}
+                  variant="contained"
+                  color="secondary"
+                >
                   salad
                 </Button>
-                <Button variant="contained" color="secondary">
+                <Button
+                  onClick={() => searchCollectionHandler("dish")}
+                  variant="contained"
+                  color="secondary"
+                >
                   ovqatlar
                 </Button>
               </div>
@@ -241,7 +310,9 @@ const OneRestaurants = () => {
                     ? product.product_volume + "liter"
                     : product.product_size + " size";
                 return (
-                  <Box className="dish_box" key={product._id}>
+                  <Box
+                  onClick={() => chosenDishHandler(product._id)}
+                  className="dish_box" key={product._id}>
                     <Box
                       className="dish_img"
                       sx={{
@@ -261,6 +332,7 @@ const OneRestaurants = () => {
                             icon={<FavoriteBorder style={{ color: "white" }} />}
                             id={product._id}
                             checkedIcon={<Favorite style={{ color: "red" }} />}
+                            onClick={targetLikeProduct}
                             checked={
                               product?.me_liked &&
                               product?.me_liked[0]?.my_favorite
