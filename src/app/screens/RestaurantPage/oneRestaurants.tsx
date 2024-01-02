@@ -47,7 +47,7 @@ import RestaurantApiService from "../../apiServices/restaurantApiService";
 const actionDispatch = (dispatch: Dispatch) => ({
   setRandomRestaurants: (data: Restaurant[]) =>
     dispatch(setRandomRestaurants(data)),
-  setChosenRestaurants: (data: Restaurant[]) =>
+  setChosenRestaurants: (data: Restaurant) =>
     dispatch(setChosenRestaurants(data)),
   setTargetProducts: (data: Product[]) => dispatch(setTargetProducts(data)),
 });
@@ -93,7 +93,7 @@ const OneRestaurants = () => {
       product_collection: "dish",
     });
 
-    const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
   useEffect(() => {
     const restaurantService = new RestaurantApiService();
@@ -101,12 +101,18 @@ const OneRestaurants = () => {
       .getRestaurants({ page: 1, limit: 10, order: "random" })
       .then((data) => setRandomRestaurants(data))
       .catch((err) => console.log(err));
+
+    restaurantService
+      .getChosenRestaurant(chosenRestaurantId)
+      .then((data) => setChosenRestaurants(data))
+      .catch((err) => console.log(err));
+
     const productService = new ProductApiService();
     productService
       .getTargetProducts(targetProductSearchObj)
       .then((data) => setTargetProducts(data))
       .catch((err) => console.log(err));
-  }, [targetProductSearchObj,productRebuild]);
+  }, [chosenRestaurantId,targetProductSearchObj, productRebuild]);
 
   const history = useHistory();
   // * HANDLERS* //
@@ -140,7 +146,7 @@ const OneRestaurants = () => {
       const like_result: any = await memberService.memberLikeTarget(data);
       assert.ok(like_result, Definer.general_err1);
       await sweetTopSmallSuccessAlert("success", 700, false);
-      setProductRebuild(new Date())
+      setProductRebuild(new Date());
     } catch (err: any) {
       console.log("targetLikeProduct, ERROR:::", err);
       sweetErrorhandling(err).then();
@@ -311,8 +317,10 @@ const OneRestaurants = () => {
                     : product.product_size + " size";
                 return (
                   <Box
-                  onClick={() => chosenDishHandler(product._id)}
-                  className="dish_box" key={product._id}>
+                    onClick={() => chosenDishHandler(product._id)}
+                    className="dish_box"
+                    key={product._id}
+                  >
                     <Box
                       className="dish_img"
                       sx={{
@@ -428,11 +436,11 @@ const OneRestaurants = () => {
         <Stack className="about_restaurnt_stack">
           <Box
             className="about_left"
-            sx={{ backgroundImage: `url('/restaurant/welcome.jpeg')` }}
+            sx={{ backgroundImage: `url(${serverApi}/${chosenRestaurant?.mb_image})` }}
           >
             <div className="about_left_desc">
-              <span>Welcome</span>
-              <p>Eng Mazali Oshxona</p>
+              <span>{chosenRestaurant?.mb_nick}</span>
+              <p>description{chosenRestaurant?.mb_description}</p>
             </div>
           </Box>
           <Box className="about_right">

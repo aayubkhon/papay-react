@@ -12,6 +12,7 @@ import { Product } from "../../types/product";
 import { retrieveTrendProducts } from "./selector";
 import { setTrendProducts } from "../../screens/HomePage/slice";
 import { serverApi } from "../../../lib/config";
+import { useHistory } from "react-router-dom";
 
 // **  REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,6 +29,8 @@ const trendProductsRetriever = createSelector(
 
 const BestDishes = () => {
   // **  INITIALIZATIONS */
+  const history = useHistory();
+
   const { setTrendProducts } = actionDispatch(useDispatch());
   const { trendProducts } = useSelector(trendProductsRetriever);
 
@@ -38,6 +41,13 @@ const BestDishes = () => {
       .then((data) => setTrendProducts(data))
       .catch((err) => console.log(err));
   }, []);
+
+  // **  HANDLERS */
+
+  const chosenDishHandler = (id: string) => {
+    history.push(`/restaurant/dish/${id}`);
+  };
+
   return (
     <div className="best_dishes_frame">
       <Container>
@@ -60,7 +70,9 @@ const BestDishes = () => {
                   >
                     <div className="dish_sale">{size_volume}</div>
                     <div className="view_btn">
-                      Batafsil ko'rish
+                      <div onClick={() => chosenDishHandler(product?._id)}>
+                        Batafsil ko'rish
+                      </div>
                       <img
                         style={{ marginLeft: "9px" }}
                         src="/icons/arrow.svg"
@@ -69,7 +81,9 @@ const BestDishes = () => {
                     </div>
                   </Stack>
                   <Stack className="dish_desc">
-                    <span className="dish_title_text">{product.product_name}</span>
+                    <span className="dish_title_text">
+                      {product.product_name}
+                    </span>
                     <span className="dish_desc_text">
                       <MonetizationOn />
                       {product.product_price}
