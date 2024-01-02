@@ -93,7 +93,7 @@ const OneRestaurants = () => {
       product_collection: "dish",
     });
 
-  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+    const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
   useEffect(() => {
     const restaurantService = new RestaurantApiService();
@@ -138,6 +138,8 @@ const OneRestaurants = () => {
   const chosenDishHandler = (id: string) => {
     history.push(`/restaurant/dish/${id}`);
   };
+
+
   const targetLikeProduct = async (e: any) => {
     try {
       assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
