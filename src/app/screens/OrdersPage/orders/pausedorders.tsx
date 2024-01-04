@@ -3,12 +3,31 @@ import TabPanel from "@mui/lab/TabPanel";
 import { Box, Button, Stack } from "@mui/material";
 import moment from "moment";
 
+// REDUX
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import assert from "assert";
+import { retrievePausedOrders } from "../selector";
+
+// **  REDUX SELECTOR */
+const pauseOrdersRetriever = createSelector(
+  retrievePausedOrders,
+  (pausedOrders) => ({
+    pausedOrders,
+  })
+);
 const processOrders = [
   [1, 2, 3],
   [1, 2, 3],
   [1, 2, 3],
 ];
+
+// * HANDLERS* //
+
 const PausedOrders = () => {
+  // **  INITIALIZATIONS */
+  const { pausedOrders } = useSelector(pauseOrdersRetriever);
+
   return (
     <TabPanel value={"2"}>
       <Stack>
@@ -50,8 +69,8 @@ const PausedOrders = () => {
                   <p>$28</p>
                   <p></p>
                 </Box>
-                  <span>{moment().format("YY-DD-MM HH:MM")}</span>
-                  <Button className="total_price_btn">YAKUNLASH</Button>
+                <span>{moment().format("YY-DD-MM HH:MM")}</span>
+                <Button className="total_price_btn">YAKUNLASH</Button>
               </Stack>
             </Stack>
           );
