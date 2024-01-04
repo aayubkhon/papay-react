@@ -12,6 +12,7 @@ import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 // import OrderApiService from "../../apiServices/orderApiService";
 import { useHistory } from "react-router-dom";
+import OrderApiService from "../../apiServices/orderApiService";
 
 const Basket = (props: any) => {
   // INITIALIZATIONS
@@ -39,18 +40,18 @@ const Basket = (props: any) => {
   };
 
   const processOrderHandler = async () => {
-    // try {
-    //   assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
-    //   const order = new OrderApiService();
-    //   await order.createOrder(cartItems);
-    //   onDeleteAll();
-    //   handleClose();
-    //   setOrderRebuild(new Date());
-    //   history.push("/orders");
-    // } catch (err) {
-    //   console.log(err);
-    //   sweetErrorHandling(err).then();
-    // }
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const order = new OrderApiService();
+      await order.createOrder(cartItems);
+      onDeleteAll();
+      handleClose();
+      setOrderRebuild(new Date());
+      history.push("/orders");
+    } catch (err) {
+      console.log(err);
+      sweetErrorhandling(err).then();
+    }
   };
   return (
     <Box className={"hover-line"}>
