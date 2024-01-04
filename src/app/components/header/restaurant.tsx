@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Basket from "./basket";
 
 export function NavbarRestaurant(props: any) {
   return (
@@ -41,10 +42,10 @@ export function NavbarRestaurant(props: any) {
             </Box>
             {props.virifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
-              <NavLink to="/orders" activeClassName="underline">
-                Orders
-              </NavLink>
-            </Box>
+                <NavLink to="/orders" activeClassName="underline">
+                  Orders
+                </NavLink>
+              </Box>
             ) : null}
             <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/community" activeClassName="underline">
@@ -63,21 +64,7 @@ export function NavbarRestaurant(props: any) {
                 Help
               </NavLink>
             </Box>
-            <Box className="hover-line">
-              <IconButton
-                aria-label="cart"
-                id="basic-button"
-                aria-controls={undefined}
-                aria-haspopup="true"
-                aria-expanded={undefined}
-                // onClick={handleClick}
-              >
-                <Badge badgeContent={3} color="secondary">
-                  <img src="/icons/shopping-cart.svg" alt="shopping-card" />
-                </Badge>
-              </IconButton>
-            </Box>
-
+            <Basket />
             {!props.virifiedMemberData ? (
               <Box>
                 <Button
@@ -138,9 +125,7 @@ export function NavbarRestaurant(props: any) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem
-              onClick={props.handleLogoutRequest}
-              >
+              <MenuItem onClick={props.handleLogoutRequest}>
                 <ListItem>
                   <Logout fontSize="small" style={{ color: "blue" }} />
                   Logout

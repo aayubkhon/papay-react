@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
+import Basket from "./basket";
 
 export function NavbarHome(props: any) {
   // ** INITIALIZATIONS **//
@@ -66,21 +67,7 @@ export function NavbarHome(props: any) {
                 Help
               </NavLink>
             </Box>
-            <Box className="hover-line">
-              <IconButton
-                aria-label="cart"
-                id="basic-button"
-                aria-controls={undefined}
-                aria-haspopup="true"
-                aria-expanded={undefined}
-                // onClick={handleClick}
-              >
-                <Badge badgeContent={3} color="secondary">
-                  <img src="/icons/shopping-cart.svg" alt="shopping-card" />
-                </Badge>
-              </IconButton>
-            </Box>
-
+           <Basket/>
             {!props.virifiedMemberData ? (
               <Box>
                 <Button
