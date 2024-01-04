@@ -151,6 +151,9 @@ function App() {
           handleLogoutRequest={handleLogoutRequest}
           virifiedMemberData={virifiedMemberData}
           cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete }
 
         />
       ) : main_path.includes("/restaurant") ? (
@@ -181,6 +184,9 @@ function App() {
           handleLogoutRequest={handleLogoutRequest}
           virifiedMemberData={virifiedMemberData}
           cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete }
 
         />
       )}
