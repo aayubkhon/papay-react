@@ -26,7 +26,7 @@ const processOrders = [
 
 const PausedOrders = () => {
   // **  INITIALIZATIONS */
-  const { pausedOrders } = useSelector(pauseOrdersRetriever);
+  // const { pausedOrders } = useSelector(pauseOrdersRetriever);
 
   return (
     <TabPanel value={"2"}>

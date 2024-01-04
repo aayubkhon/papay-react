@@ -25,7 +25,7 @@ const processOrders = [
 
 const FinishedOrders = () => {
   // **  INITIALIZATIONS */
-  const { finishedOrders } = useSelector(finishOrdersRetriever);
+  // const { finishedOrders } = useSelector(finishOrdersRetriever);
   return (
     <TabPanel value={"3"}>
       <Stack>
