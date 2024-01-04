@@ -153,8 +153,8 @@ function App() {
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
-          onDelete={onDelete }
-
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       ) : main_path.includes("/restaurant") ? (
         <NavbarRestaurant
@@ -170,7 +170,8 @@ function App() {
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
-          onDelete={onDelete }
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       ) : (
         <NavbarOthers
@@ -186,8 +187,8 @@ function App() {
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
-          onDelete={onDelete }
-
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       )}
 

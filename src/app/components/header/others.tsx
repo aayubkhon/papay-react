@@ -42,10 +42,10 @@ export function NavbarOthers(props: any) {
             </Box>
             {props.virifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
-              <NavLink to="/orders" activeClassName="underline">
-                Orders
-              </NavLink>
-            </Box>
+                <NavLink to="/orders" activeClassName="underline">
+                  Orders
+                </NavLink>
+              </Box>
             ) : null}
             <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/community" activeClassName="underline">
@@ -69,6 +69,7 @@ export function NavbarOthers(props: any) {
               onAdd={props.onAdd}
               onRemove={props.onRemove}
               onDelete={props.onDelete}
+              onDeleteAll={props.onDeleteAll}
             />
             {!props.virifiedMemberData ? (
               <Box>
@@ -96,7 +97,7 @@ export function NavbarOthers(props: any) {
                 onClick={props.handleLogOutClick}
               />
             )}
-             <Menu
+            <Menu
               anchorEl={props.anchorEl}
               open={props.open}
               onClose={props.handleCloseLogOut}

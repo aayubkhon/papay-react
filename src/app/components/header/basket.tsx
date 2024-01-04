@@ -46,7 +46,7 @@ const Basket = (props: any) => {
       await order.createOrder(cartItems);
       onDeleteAll();
       handleClose();
-      setOrderRebuild(new Date());
+      // setOrderRebuild(new Date());
       history.push("/orders");
     } catch (err) {
       console.log(err);
