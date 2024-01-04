@@ -64,7 +64,7 @@ export function NavbarOthers(props: any) {
                 Help
               </NavLink>
             </Box>
-            <Basket />
+            <Basket cartItems={props.cartItems} />
             {!props.virifiedMemberData ? (
               <Box>
                 <Button

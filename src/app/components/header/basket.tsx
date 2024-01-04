@@ -1,12 +1,34 @@
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Box, Button, Stack } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import Menu from "@mui/material/Menu";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Badge, Box, Button, IconButton, Menu, Stack } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import React, { useState } from "react";
+import { CartItem } from "../../types/others";
+import { serverApi } from "../../../lib/config";
+import { sweetErrorhandling } from "../../../lib/sweetAlert";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+// import OrderApiService from "../../apiServices/orderApiService";
+import { useHistory } from "react-router-dom";
 
 const Basket = (props: any) => {
   // INITIALIZATIONS
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll, setOrderRebuild } =
+    props;
+  console.log(cartItems);
+
+  const itemsPrice = cartItems.reduce(
+    (a: any, c: CartItem) => a + c.price * c.quantity,
+    0
+  );
+  const shippingPrice = itemsPrice > 100 ? 0 : 2;
+  const totalPrice = itemsPrice + shippingPrice;
 
   // HANDLERS
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -17,10 +39,18 @@ const Basket = (props: any) => {
   };
 
   const processOrderHandler = async () => {
-    try {
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+    //   const order = new OrderApiService();
+    //   await order.createOrder(cartItems);
+    //   onDeleteAll();
+    //   handleClose();
+    //   setOrderRebuild(new Date());
+    //   history.push("/orders");
+    // } catch (err) {
+    //   console.log(err);
+    //   sweetErrorHandling(err).then();
+    // }
   };
   return (
     <Box className={"hover-line"}>
@@ -32,8 +62,8 @@ const Basket = (props: any) => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <Badge>
-          <img src="/icons/shopping-cart.svg" alt="" />
+        <Badge badgeContent={cartItems.length} color="secondary">
+          <img src="/icons/shopping-cart.svg" alt="cart" />
         </Badge>
       </IconButton>
       <Menu
@@ -41,20 +71,18 @@ const Basket = (props: any) => {
         id="account-menu"
         open={open}
         onClose={handleClose}
-        //   onClick={handleClose}
         PaperProps={{
-          elevation: 0,
-          SX: {
+          sx: {
             overflow: "visible",
-            filter: "drop-shadow(Opx 2px 8px rgba(0,0,0,0.32))",
+            filter: "drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32))",
             mt: 1.5,
-            "& •MuiAvatar-root": {
+            "& .MuiAvatar-root": {
               width: 32,
               height: 32,
               ml: -0.5,
               mr: 1,
             },
-            "§:before": {
+            "&:before": {
               content: '""',
               display: "block",
               position: "absolute",
@@ -62,8 +90,8 @@ const Basket = (props: any) => {
               right: 14,
               width: 10,
               height: 10,
-              bocolors: "background,paper",
-              transform: "translateYl-50%1 rotate(45dea)",
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
           },
@@ -73,34 +101,45 @@ const Basket = (props: any) => {
       >
         <Stack className="basket_frame">
           <Box className="all_check_box">
-            {false ? <div>Cart is empty</div> : <div>My Cart Products:</div>}
+            {cartItems.length > 0 ? (
+              <div>Cart is empty!</div>
+            ) : (
+              <div>My Cart Products</div>
+            )}
           </Box>
           <Box className="orders_main_wrapper">
             <Box className="orders_wrapper">
-              {[0].map(() => {
-                const image_path = "/others/steak.png";
+              {cartItems.map((item: CartItem) => {
+                const image_path = `${serverApi}/${item.image}`;
                 return (
-                  <Box className={"basket_info_box"}>
-                    <div className="cancel_btn">
-                      <CancelIcon
-                        color="primary"
-                        // onCklick={}
-                      />
+                  <Box className="basket_info_box">
+                    <div onClick={() => onDelete(item)} className="cancel_btn">
+                      <CancelIcon color="primary" />
                     </div>
-                    <img src={image_path} className="product_img" alt="" />
-                    <span className="product_name">Shashlik</span>
-                    <p className="product_price">$10 x 2</p>
+                    <img
+                      src={image_path}
+                      alt="product"
+                      className="product_img"
+                    />
+                    <span className="product_name">{item.name}</span>
+                    <p className="product_price">
+                      $ {item.price} x {item.quantity}
+                    </p>
                     <Box sx={{ minWidth: 120 }}>
                       <div className="col-2">
                         <button
-                          className="remove"
-                          // onClick={}
+                          onClick={() => {
+                            onRemove(item);
+                          }}
+                          className="romove"
                         >
                           -
-                        </button>{" "}
+                        </button>
                         <button
                           className="add"
-                          // onClick={}
+                          onClick={() => {
+                            onAdd(item);
+                          }}
                         >
                           +
                         </button>
@@ -111,9 +150,11 @@ const Basket = (props: any) => {
               })}
             </Box>
           </Box>
-          {true ? (
-            <Box className={"to_order_box"}>
-              <span className="price_text">Jami $22 (20 + 2)</span>
+          {cartItems.length > 0 ? (
+            <Box className="to_order_box">
+              <span className="price_text">
+                Jami: $ {totalPrice} ({itemsPrice} + {shippingPrice})
+              </span>
               <Button
                 onClick={processOrderHandler}
                 startIcon={<ShoppingCartIcon />}

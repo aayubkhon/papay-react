@@ -17,10 +17,15 @@ import { Footer } from "./components/footer";
 import AuthenticationModal from "./components/auth";
 import { Member } from "./types/user";
 import { serverApi } from "../lib/config";
-import { sweetFailureProvider, sweetTopSmallSuccessAlert } from "../lib/sweetAlert";
+import {
+  sweetFailureProvider,
+  sweetTopSmallSuccessAlert,
+} from "../lib/sweetAlert";
 import { Definer } from "../lib/Definer";
-import MemberApiService from './apiServices/memberApiService';
-import  "../app/apiServices/verify.ts"
+import MemberApiService from "./apiServices/memberApiService";
+import "../app/apiServices/verify.ts";
+import { CartItem } from "./types/others";
+import { Product } from "./types/product";
 
 function App() {
   // **  INITIALIZATIONS */
@@ -34,7 +39,23 @@ function App() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  const cartJson: any = localStorage.getItem("cart_data");
+  const current_cart = JSON.parse(cartJson) ?? [];
+  const [cartItems, setCartItems] = useState<CartItem[]>(current_cart);
 
+  useEffect(() => {
+    console.log("=== useEffect: App ===");
+    const memberDataJson: any = localStorage.getItem("member_data")
+      ? localStorage.getItem("member_data")
+      : null;
+    const member_data = memberDataJson ? JSON.parse(memberDataJson) : null;
+    if (member_data) {
+      member_data.mb_image = member_data.mb_image
+        ? `${serverApi}/${member_data.mb_image}`
+        : "/auth/avatar.svg";
+      setVirifiedMemberData(member_data);
+    }
+  }, [signUpOpen, loginOpne]);
 
   // * HANDLERS* //
   const handleSignUpOpen = () => setSignUpOpen(true);
@@ -49,30 +70,45 @@ function App() {
     setAnchorEl(null);
   };
 
-  const handleLogoutRequest = async()=>{
+  const handleLogoutRequest = async () => {
     try {
-      const memberApiService = new MemberApiService()
-      memberApiService.logOutRequest() 
-      await sweetTopSmallSuccessAlert('success',700,true)
+      const memberApiService = new MemberApiService();
+      memberApiService.logOutRequest();
+      await sweetTopSmallSuccessAlert("success", 700, true);
     } catch (err) {
       console.log(err);
-      sweetFailureProvider(Definer.general_err1)
+      sweetFailureProvider(Definer.general_err1);
     }
-  }
-  useEffect(() => {
-    console.log("=== useEffect: App ===");
-    const memberDataJson: any = localStorage.getItem("member_data")
-      ? localStorage.getItem("member_data")
-      : null;
-    const member_data = memberDataJson ? JSON.parse(memberDataJson) : null;
-    if (member_data) {
-      member_data.mb_image = member_data.mb_image
-        ? `${serverApi}/${member_data.mb_image}`
-        : "/auth/avatar.svg";
-      setVirifiedMemberData(member_data);
-    }
-  }, [signUpOpen,loginOpne]);
+  };
 
+  const onAdd = (product: Product) => {
+    const exist: any = cartItems.find(
+      (item: CartItem) => item._id === product._id
+    );
+    if (exist) {
+      const cart_updated = cartItems.map((item: CartItem) =>
+        item._id === product._id
+          ? { ...exist, quantity: exist.quantity + 1 }
+          : item
+      );
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    } else {
+      const new_item: CartItem = {
+        _id: product._id,
+        quantity: 1,
+        name: product.product_name,
+        price: product.product_price,
+        image: product.product_images[0],
+      };
+      const cart_updated = [...cartItems, { ...new_item }];
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    }
+  };
+  const onRemove = () =>{}
+  const onDelete = () =>{}
+  const onDeleteAll = () =>{}
   return (
     <Router>
       {main_path === "/" ? (
@@ -86,6 +122,8 @@ function App() {
           handleCloseLogOut={handleCloseLogOut}
           handleLogoutRequest={handleLogoutRequest}
           virifiedMemberData={virifiedMemberData}
+          cartItems={cartItems}
+
         />
       ) : main_path.includes("/restaurant") ? (
         <NavbarRestaurant
@@ -98,7 +136,8 @@ function App() {
           handleCloseLogOut={handleCloseLogOut}
           handleLogoutRequest={handleLogoutRequest}
           virifiedMemberData={virifiedMemberData}
-
+          cartItems={cartItems}
+          onAdd={onAdd}
         />
       ) : (
         <NavbarOthers
@@ -111,12 +150,14 @@ function App() {
           handleSignUpOpen={handleSignUpOpen}
           handleLogoutRequest={handleLogoutRequest}
           virifiedMemberData={virifiedMemberData}
+          cartItems={cartItems}
+
         />
       )}
 
       <Switch>
         <Route path="/restaurant">
-          <RestaurantPage />
+          <RestaurantPage onAdd={onAdd} />
         </Route>
         <Route path="/community">
           <CommunityPage />

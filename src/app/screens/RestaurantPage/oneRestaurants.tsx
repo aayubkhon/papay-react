@@ -74,7 +74,7 @@ const targetProductsRetriever = createSelector(
 
 // * HANDLERS* //
 
-const OneRestaurants = () => {
+const OneRestaurants = (props: any) => {
   // **  INITIALIZATIONS */
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
   const { setRandomRestaurants, setChosenRestaurants, setTargetProducts } =
@@ -93,7 +93,7 @@ const OneRestaurants = () => {
       product_collection: "dish",
     });
 
-    const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
   useEffect(() => {
     const restaurantService = new RestaurantApiService();
@@ -112,7 +112,7 @@ const OneRestaurants = () => {
       .getTargetProducts(targetProductSearchObj)
       .then((data) => setTargetProducts(data))
       .catch((err) => console.log(err));
-  }, [chosenRestaurantId,targetProductSearchObj, productRebuild]);
+  }, [chosenRestaurantId, targetProductSearchObj, productRebuild]);
 
   const history = useHistory();
   // * HANDLERS* //
@@ -138,7 +138,6 @@ const OneRestaurants = () => {
   const chosenDishHandler = (id: string) => {
     history.push(`/restaurant/dish/${id}`);
   };
-
 
   const targetLikeProduct = async (e: any) => {
     try {
@@ -352,7 +351,13 @@ const OneRestaurants = () => {
                           />
                         </Badge>
                       </Button>
-                      <Button className="view_btn">
+                      <Button
+                        onClick={(e) => {
+                          props.onAdd(product);
+                          e.stopPropagation();
+                        }}
+                        className="view_btn"
+                      >
                         <img
                           src="/icons/shopping-cart.svg"
                           style={{ display: "flex" }}
@@ -438,7 +443,9 @@ const OneRestaurants = () => {
         <Stack className="about_restaurnt_stack">
           <Box
             className="about_left"
-            sx={{ backgroundImage: `url(${serverApi}/${chosenRestaurant?.mb_image})` }}
+            sx={{
+              backgroundImage: `url(${serverApi}/${chosenRestaurant?.mb_image})`,
+            }}
           >
             <div className="about_left_desc">
               <span>{chosenRestaurant?.mb_nick}</span>
