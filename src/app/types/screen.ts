@@ -30,6 +30,8 @@ export interface RestaurantPageState {
   chosenProducts: Product | null;
 }
 
+// **  ORDERS PAGE*/
+
 export interface OrdersPageState {
   pausedOrders: Order[];
   processOrders: Order[];

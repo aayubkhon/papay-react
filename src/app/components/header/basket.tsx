@@ -22,7 +22,6 @@ const Basket = (props: any) => {
 
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll, setOrderRebuild } =
     props;
-  console.log(cartItems);
 
   const itemsPrice = cartItems.reduce(
     (a: any, c: CartItem) => a + c.price * c.quantity,
@@ -46,7 +45,7 @@ const Basket = (props: any) => {
       await order.createOrder(cartItems);
       onDeleteAll();
       handleClose();
-      // setOrderRebuild(new Date());
+      setOrderRebuild(new Date());
       history.push("/orders");
     } catch (err) {
       console.log(err);

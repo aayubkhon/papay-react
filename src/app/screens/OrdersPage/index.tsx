@@ -4,27 +4,21 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import "../../css/orders.css";
-import ProcessOrders from "./orders/processOrder";
-import PausedOrders from "./orders/pausedorders";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import FinishedOrders from "./orders/finishedOrders";
 import { Order } from "../../types/orders";
 
 // REDUX
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { serverApi } from "../../../lib/config";
-import {
-  sweetErrorhandling,
-  sweetTopSmallSuccessAlert,
-} from "../../../lib/sweetAlert";
-import assert from "assert";
-import { Definer } from "../../../lib/Definer";
 import {
   setPausedOrders,
   setProcessOrders,
   setFinishedOrders,
 } from "../OrdersPage/slice";
+import OrderApiService from "../../apiServices/orderApiService";
+import ProcessOrders from "./processOrder";
+import PausedOrders from "./pausedorders";
+import FinishedOrders from "./finishedOrders";
 
 // **  REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -32,13 +26,27 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
   setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
-const OrdersPage = () => {
+const OrdersPage = (props: any) => {
   // ** INITIALIZATIONS **//
   const [value, setValue] = useState("1");
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const orderService = new OrderApiService();
+    orderService
+      .getMyOrders("paused")
+      .then((data) => setPausedOrders(data))
+      .catch((err) => console.log(err));
+    orderService
+      .getMyOrders("process")
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log(err));
+    orderService
+      .getMyOrders("finished")
+      .then((data) => setFinishedOrders(data))
+      .catch((err) => console.log(err));
+  }, [props.orderRebuild]);
 
   // ** HANDLERS **//
   const handleChange = (event: any, newValue: string) => {
@@ -76,9 +84,9 @@ const OrdersPage = () => {
               </Box>
             </Box>
             <Stack>
-              <ProcessOrders />
-              <PausedOrders />
-              <FinishedOrders />
+              <ProcessOrders setOrderRebuild={props.setOrderRebuild} />
+              <PausedOrders setOrderRebuild={props.setOrderRebuild} />
+              <FinishedOrders setOrderRebuild={props.setOrderRebuild} />
             </Stack>
           </TabContext>
         </Stack>

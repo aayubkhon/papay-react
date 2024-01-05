@@ -45,10 +45,10 @@ export function NavbarHome(props: any) {
             </Box>
             {props.virifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
-              <NavLink to="/orders" activeClassName="underline">
-                Orders
-              </NavLink>
-            </Box>
+                <NavLink to="/orders" activeClassName="underline">
+                  Orders
+                </NavLink>
+              </Box>
             ) : null}
             <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/community" activeClassName="underline">
@@ -72,8 +72,8 @@ export function NavbarHome(props: any) {
               onAdd={props.onAdd}
               onRemove={props.onRemove}
               onDelete={props.onDelete}
-          onDeleteAll={props.onDeleteAll}
-
+              onDeleteAll={props.onDeleteAll}
+              setOrderRebuild={props.setOrderRebuild}
             />
             {!props.virifiedMemberData ? (
               <Box>
@@ -135,9 +135,7 @@ export function NavbarHome(props: any) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem
-              onClick={props.handleLogoutRequest}
-              >
+              <MenuItem onClick={props.handleLogoutRequest}>
                 <ListItem>
                   <Logout fontSize="small" style={{ color: "blue" }} />
                   Logout
