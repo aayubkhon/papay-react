@@ -27,7 +27,7 @@ const pausedOrdersRetriever = createSelector(
 
 const PausedOrders = (props: any) => {
   // **  INITIALIZATIONS */
-  const { pausedOrders } = useSelector(pausedOrdersRetriever);
+  // const { pausedOrders } = useSelector(pausedOrdersRetriever);
 
   // * HANDLERS* //
 
@@ -71,7 +71,7 @@ const PausedOrders = (props: any) => {
   };
   return (
     <TabPanel value={"2"}>
-      <Stack>
+      {/* <Stack>
         {pausedOrders?.map((order: Order) => {
           return (
             <Stack flexDirection={"column"} className="order_main_box ">
@@ -122,7 +122,7 @@ const PausedOrders = (props: any) => {
             </Stack>
           );
         })}
-      </Stack>
+      </Stack> */}
     </TabPanel>
   );
 };

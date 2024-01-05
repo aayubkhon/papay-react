@@ -36,7 +36,7 @@ function App() {
   const main_path = window.location.pathname;
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [loginOpne, setLoginOpen] = useState(false);
-  const [orderRebuild,setOrderRebuild] = useState<Date>(new Date())
+  const [orderRebuild, setOrderRebuild] = useState<Date>(new Date());
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -204,7 +204,11 @@ function App() {
           <CommunityPage />
         </Route>
         <Route path="/orders">
-          <OrdersPage orderRebuild={orderRebuild} setOrderRebuild={setOrderRebuild} />
+          <OrdersPage
+            orderRebuild={orderRebuild}
+            setOrderRebuild={setOrderRebuild}
+            virifiedMemberData={virifiedMemberData}
+          />
         </Route>
         <Route path="/member-page">
           <MembersPage />

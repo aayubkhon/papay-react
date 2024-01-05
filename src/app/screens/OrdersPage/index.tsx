@@ -19,6 +19,7 @@ import OrderApiService from "../../apiServices/orderApiService";
 import ProcessOrders from "./processOrder";
 import PausedOrders from "./pausedorders";
 import FinishedOrders from "./finishedOrders";
+import { Member } from "../../types/user";
 
 // **  REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -31,6 +32,8 @@ const OrdersPage = (props: any) => {
   const [value, setValue] = useState("1");
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
+
+  const virifiedMemberData: Member | null = props.virifiedMemberData;
 
   useEffect(() => {
     const orderService = new OrderApiService();
@@ -93,14 +96,18 @@ const OrdersPage = (props: any) => {
         <Stack className="order_right">
           <Box className="user_box">
             <Box className="user_img_wrapper">
-              <img src="/icons/user.svg" />
+              <img style={{width:"35px",height:"35px"}} src={virifiedMemberData?.mb_image} />
             </Box>
-            <p className="user_name">Oliver Queen</p>
-            <p className="user_status">Foydalanuvchi</p>
+            <p className="user_name">{virifiedMemberData?.mb_nick}</p>
+            <p className="user_status">
+              {virifiedMemberData?.mb_type ?? "Foydalanuvchi"}
+            </p>
             <Box className="line" />
             <Box className="user_address">
               <LocationOnIcon />
-              <span style={{ marginLeft: "10px" }}>Seoul</span>
+              <span style={{ marginLeft: "10px" }}>
+                {virifiedMemberData?.mb_address ?? "manzil kiritlmagan"}
+              </span>
             </Box>
           </Box>
           <Box className="payment_box">
