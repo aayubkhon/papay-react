@@ -3,6 +3,7 @@ import HomePageReducer from "./screens/HomePage/slice";
 import reduxLoger from "redux-logger";
 import RestaurantPageReducer from "./screens/RestaurantPage/slice";
 import OrdersPageReducer from "./screens/OrdersPage/slice";
+import CommuniPageReducer from "./screens/CommunityPage/slice";
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -11,7 +12,8 @@ export const store = configureStore({
   reducer: {
     homePage: HomePageReducer,
     restaurantPage: RestaurantPageReducer,
-    ordersPage:OrdersPageReducer
+    ordersPage: OrdersPageReducer,
+    communityPage: CommuniPageReducer,
   },
 });
 
@@ -23,8 +25,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
-
-
-
-
-
