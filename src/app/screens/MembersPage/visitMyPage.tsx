@@ -92,7 +92,7 @@ const VisitMyPage = (props:any) => {
             <Stack className="my_page_left">
               <Box display={"flex"} flexDirection={"column"}>
                 <TabPanel value={"1"}>
-                  <Box className="menu_name">Mening Maqolalarim</Box>
+                  <Box  className="menu_name">Mening Maqolalarim</Box>
                   <Box className="menu_content">
                     <MemberPosts />
                     <Stack
@@ -215,7 +215,7 @@ const VisitMyPage = (props:any) => {
                   </TabList>
                 </Box>
               </Stack>
-              <Box className="menu_wrapper">
+              <Box  className="menu_wrapper">
                 <Box onClick={() => setValue("1")} className="tab_menu">
                   <img src="/icons/Pencil.svg" alt="icon" />{" "}
                   <span style={{ marginLeft: "15px" }}>Maqolalarim</span>
