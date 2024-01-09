@@ -211,7 +211,7 @@ function App() {
           />
         </Route>
         <Route path="/member-page">
-          <MembersPage />
+          <MembersPage virifiedMemberData={virifiedMemberData} />
         </Route>
         <Route path="/help">
           <HelpPage />
