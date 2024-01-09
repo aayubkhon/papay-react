@@ -1,9 +1,9 @@
 import { createSelector } from "reselect";
 import { AppRootState } from "../../types/screen";
 
-const selecCommunityPage = (state: AppRootState) => state.communityPage;
+const selectCommunityPage = (state: AppRootState) => state.communityPage;
 
 export const retrieveTargetBoArticles = createSelector(
-  selecCommunityPage,
+  selectCommunityPage,
   (CommunityPage) => CommunityPage.targetBoArticles
 );

@@ -3,15 +3,16 @@ import React from "react";
 import moment from "moment";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-
-
-
+import { BoArticles } from "../../types/boArticle";
+import { serverApi } from "../../../lib/config";
 
 const TargetArticles = (props: any) => {
   return (
     <Stack>
-      {props.targetBoArticles?.map((articles: any, index: string) => {
-        const art_image_url = "/community/cute.jpeg";
+      {props.targetBoArticles?.map((article: BoArticles) => {
+        const art_image_url = article.art_image
+          ? `${serverApi}/${article.art_image}`
+          : "/community/default_avatar";
         return (
           <Link
             className="all_article_box"
@@ -19,6 +20,7 @@ const TargetArticles = (props: any) => {
             href={``}
           >
             <Box
+              key={article._id}
               className="all_article_img"
               sx={{ backgroundImage: `url(${art_image_url})` }}
             ></Box>
@@ -35,25 +37,26 @@ const TargetArticles = (props: any) => {
                     marginTop: "10px",
                   }}
                 />
-                <span className="all_article_auth_user">leo</span>
+                <span className="all_article_auth_user">
+                  {article?.member_data.mb_nick}
+                </span>
               </Box>
               <Box
-              className="all_evalution"
+                className="all_evalution"
                 display={"flex"}
                 flexDirection={"column"}
-                
               >
-                <span className="all_article_title">evalution</span>
-                <p className="all_article_desc">Texas De Brazil</p>
+                <span className="all_article_title">{article?.bo_id}</span>
+                <p className="all_article_desc">{article?.art_subject}</p>
               </Box>
             </Box>
             <Box className="all_article_icon">
               <div className="all_article_icon_items">
-              <span>{moment().format("YY-DD-MM HH:MM")}</span>
-              <FavoriteBorder  sx={{color:"text.secondary"}}/>
-              <span>100</span> 
-              <RemoveRedEyeIcon />
-              <span>1000</span>
+                <span>{moment().format("YY-DD-MM HH:MM")}</span>
+                <FavoriteBorder sx={{ color: "text.secondary" }} />
+                <span>{article?.art_likes}</span>
+                <RemoveRedEyeIcon />
+                <span>{article?.art_views}</span>
               </div>
             </Box>
           </Link>

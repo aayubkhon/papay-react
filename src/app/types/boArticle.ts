@@ -13,6 +13,13 @@ export interface BoArticles {
   mb_id: string;
   createdAt: Date;
   updateAt: Date;
-  member_data:Member
-  me_liked: MeLiked[];//Me liked
+  member_data: Member;
+  me_liked: MeLiked[]; //Me liked
+}
+
+export interface SearchArticlesObj {
+  page: number;
+  limit: number;
+  bo_id: string;
+  order?: number | null;
 }
