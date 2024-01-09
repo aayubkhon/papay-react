@@ -53,6 +53,8 @@ export function CommunityPage(props: any) {
     }
   );
 
+  const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
+
   useEffect(() => {
     const communityService = new CommunityApiService();
     communityService
@@ -61,7 +63,7 @@ export function CommunityPage(props: any) {
         setTargetBoArticles(data);
       })
       .catch((err) => console.log(err));
-  }, [searchArticlesObj]);
+  }, [searchArticlesObj,articlesRebuild]);
 
   // ** HANDLERS **//
   const handleChange = (event: any, newValue: string) => {
@@ -118,21 +120,27 @@ export function CommunityPage(props: any) {
                 <Box className="article_main">
                   <TabPanel value={"1"}>
                     <TargetArticles
+                      setArticlesRebuild={setArticlesRebuild}
                       targetBoArticles={targetBoArticles}
-                      test={"Mashxurlar"}
                     />
                   </TabPanel>
                   <TabPanel value={"2"}>
                     <TargetArticles
+                      setArticlesRebuild={setArticlesRebuild}
                       targetBoArticles={targetBoArticles}
-                      test={"Maqolar"}
                     />
                   </TabPanel>
                   <TabPanel value={"3"}>
-                    <TargetArticles targetBoArticles={targetBoArticles} />
+                    <TargetArticles
+                      targetBoArticles={targetBoArticles}
+                      setArticlesRebuild={setArticlesRebuild}
+                    />
                   </TabPanel>
                   <TabPanel value={"4"}>
-                    <TargetArticles targetBoArticles={targetBoArticles} />
+                    <TargetArticles
+                      targetBoArticles={targetBoArticles}
+                      setArticlesRebuild={setArticlesRebuild}
+                    />
                   </TabPanel>
                 </Box>
                 <Box className="article_bott">

@@ -150,20 +150,19 @@
 
 .community_page .all_article_box {
   width: 100%;
-  height: 160px;
+  height: 155px;
   background: #182226;
   border-radius: 30px;
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  border: 1px solid red;
+  margin-top: 15px;
+
 
 }
 
 .community_page .all_article_box .all_article_container {
   display: flex;
   flex-direction: column;
-
 }
 
 .community_page .all_article_img {
@@ -179,6 +178,8 @@
   font-size: 16px;
   font-family: "Poppins";
   font-weight: 400;
+  margin-left: 10px;
+
 
 }
 
@@ -186,6 +187,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+
 }
 
 .community_page .all_article_container .all_article_title {
@@ -194,7 +196,7 @@
   font-family: "Poppins";
   font-weight: 600;
   margin-left: 15px;
-  margin-top: 10px;
+
 
 }
 
@@ -204,17 +206,10 @@
   font-family: "Poppins";
   font-weight: 400;
   margin-left: 15px;
-  width: 100%;
 
 }
 
-.community_page .all_article_icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 100px;
-  width: 100%;
-}
+
 
 .community_page .all_article_icon_items {
   color: white;
@@ -222,6 +217,7 @@
   align-items: center;
   justify-content: space-evenly;
   width: 70%;
+
   
 }
 
@@ -230,4 +226,15 @@
   align-items: center;
   justify-content: center;
   border-top: 1px solid #fff;
+
+}
+
+.community_page .article_bott_box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  color: #fff;
+  margin-left: 80px;
+  width: 400px;
 }
