@@ -8,7 +8,7 @@ import {
   Tab,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MemberPosts from "./memberPosts";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -20,7 +20,7 @@ import { Facebook, Instagram, Telegram, YouTube } from "@mui/icons-material";
 import TuiEditor from "./tuiEditor";
 import TvIewer from "./TvIewer";
 import { Member } from "../../types/user";
-import { BoArticles } from "../../types/boArticle";
+import { BoArticles, SearchMemberBoArticles } from "../../types/boArticle";
 // REDUX
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -36,14 +36,19 @@ import {
   setChosenMemberBoArticles,
   setChosenSingleBoArticle,
 } from "./slice";
-
+import {
+  sweetErrorhandling,
+  sweetFailureProvider,
+} from "../../../lib/sweetAlert";
+import CommunityApiService from "../../apiServices/communityApiService";
+import MemberApiService from "../../apiServices/memberApiService";
 
 // **  REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
-  setChosenMember: (data: Member[]) => dispatch(setChosenMember(data)),
+  setChosenMember: (data: Member) => dispatch(setChosenMember(data)),
   setChosenMemberBoArticles: (data: BoArticles[]) =>
     dispatch(setChosenMemberBoArticles(data)),
-  setChosenSingleBoArticle: (data: BoArticles[]) =>
+  setChosenSingleBoArticle: (data: BoArticles) =>
     dispatch(setChosenSingleBoArticle(data)),
 });
 
@@ -66,8 +71,10 @@ const chosenSingleBoArticleRetriever = createSelector(
     chosenSingleBoArticle,
   })
 );
-const VisitMyPage = (props:any) => {
+const VisitMyPage = (props: any) => {
   // ** INITIALIZATIONS **//
+  const { virifiedMemberData } = props;
+
   const {
     setChosenMember,
     setChosenMemberBoArticles,
@@ -79,10 +86,52 @@ const VisitMyPage = (props:any) => {
   );
   const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
   const [value, setValue] = useState("5");
+  const [articlesRebuild,setArticlesRebuild] = useState<Date>(new Date)
+  const [memberArticleSearchObj, setMemberArticleSearchObj] =
+    useState<SearchMemberBoArticles>({
+      mb_id: "none",
+      page: 1,
+      limit: 5,
+    });
+  useEffect(() => {
+    if (!localStorage.getItem("member_data")) {
+      sweetFailureProvider("Please login first", true, true);
+    }
+    const communityService = new CommunityApiService();
+    const memberService = new MemberApiService();
+
+    communityService
+      .getMemberCommunityArticles(memberArticleSearchObj)
+      .then((data) => setChosenMemberBoArticles(data))
+      .catch((err) => console.log(err));
+
+    //setChosenMember
+    memberService
+      .getChosenMember(virifiedMemberData?._id)
+      .then((data) => setChosenMember(data))
+      .catch((err) => console.log(err));
+  }, [memberArticleSearchObj,articlesRebuild]);
 
   // ** HANDLERS **//
   const hendleChange = (event: any, newValue: string) => {
     setValue(newValue);
+  };
+  const hendlePaginationChange = (event: any, value: number) => {
+    memberArticleSearchObj.page = value;
+    setMemberArticleSearchObj({ ...memberArticleSearchObj });
+  };
+
+  const renderChosenArticleHandler = async (art_id: string) => {
+    try {
+      const communityService = new CommunityApiService();
+      communityService
+        .getChosenArticle(art_id)
+        .then((data) => setChosenSingleBoArticle(data))
+        .catch((err) => console.log(err));
+    } catch (err: any) {
+      console.log(err);
+      sweetErrorhandling(err).then();
+    }
   };
   return (
     <div className="my_page">
@@ -92,9 +141,13 @@ const VisitMyPage = (props:any) => {
             <Stack className="my_page_left">
               <Box display={"flex"} flexDirection={"column"}>
                 <TabPanel value={"1"}>
-                  <Box  className="menu_name">Mening Maqolalarim</Box>
+                  <Box className="menu_name">Mening Maqolalarim</Box>
                   <Box className="menu_content">
-                    <MemberPosts />
+                    <MemberPosts
+                      chosenMemberBoArticles={chosenMemberBoArticles}
+                      renderChosenArticleHandler={renderChosenArticleHandler}
+                      setArticlesRebuild={setArticlesRebuild}
+                    />
                     <Stack
                       sx={{ my: "40px" }}
                       direction={"row"}
@@ -116,6 +169,7 @@ const VisitMyPage = (props:any) => {
                               color="secondary"
                             />
                           )}
+                          onChange={hendlePaginationChange}
                         />
                       </Box>
                     </Stack>
@@ -215,7 +269,7 @@ const VisitMyPage = (props:any) => {
                   </TabList>
                 </Box>
               </Stack>
-              <Box  className="menu_wrapper">
+              <Box className="menu_wrapper">
                 <Box onClick={() => setValue("1")} className="tab_menu">
                   <img src="/icons/Pencil.svg" alt="icon" />{" "}
                   <span style={{ marginLeft: "15px" }}>Maqolalarim</span>
