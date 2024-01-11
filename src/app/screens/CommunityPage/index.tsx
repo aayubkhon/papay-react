@@ -145,8 +145,8 @@ export function CommunityPage(props: any) {
                 </Box>
                 <Box className="article_bott">
                   <Pagination
-                    count={3}
-                    page={1}
+                    count={searchArticlesObj.limit}
+                    page={searchArticlesObj.page}
                     renderItem={(item) => (
                       <PaginationItem
                         style={{ color: "white" }}

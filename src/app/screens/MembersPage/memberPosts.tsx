@@ -15,6 +15,7 @@ import {
 import { Definer } from "../../../lib/Definer";
 
 const MemberPosts = (props: any) => {
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const {
     chosenMemberBoArticles,
     renderChosenArticleHandler,
@@ -43,12 +44,17 @@ const MemberPosts = (props: any) => {
         const image_path = article.art_image
           ? `${serverApi}/${article?.art_image}`
           : "/community/cute.jpeg";
+
         return (
-          <Link
+          <Stack
+            key={article._id}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
             className="all_article_box"
-            sx={{ textDecoration: "none" }}
-            href={``}
-          >
+            onClick={() => renderChosenArticleHandler(article?._id)}            
+          >            
             <Box
               className="all_article_img"
               sx={{ backgroundImage: `url(${image_path})` }}
@@ -87,7 +93,7 @@ const MemberPosts = (props: any) => {
             <Box className="article_bott_box">
               <span>{moment(article.createdAt).format("YY-MM-DD HH:MM")}</span>
               <Checkbox
-                // {...label}
+                {...label}
                 icon={<FavoriteBorder />}
                 checkedIcon={<Favorite style={{ color: "red" }} />}
                 id={article?._id}
@@ -103,7 +109,7 @@ const MemberPosts = (props: any) => {
               <RemoveRedEyeIcon sx={{ m: "0 10px" }} />
               <span>{article?.art_views}</span>
             </Box>
-          </Link>
+          </Stack>
         );
       })}
     </Stack>

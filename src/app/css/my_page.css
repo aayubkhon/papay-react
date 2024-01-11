@@ -185,6 +185,7 @@
   font-weight: 600;
   margin-left: 15px;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .my_page .all_article_container .all_article_desc {

@@ -85,8 +85,8 @@ const VisitMyPage = (props: any) => {
     chosenMemberBoArticlesRetriever
   );
   const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
-  const [value, setValue] = useState("5");
-  const [articlesRebuild,setArticlesRebuild] = useState<Date>(new Date)
+  const [value, setValue] = useState("1");
+  const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [memberArticleSearchObj, setMemberArticleSearchObj] =
     useState<SearchMemberBoArticles>({
       mb_id: "none",
@@ -110,7 +110,7 @@ const VisitMyPage = (props: any) => {
       .getChosenMember(virifiedMemberData?._id)
       .then((data) => setChosenMember(data))
       .catch((err) => console.log(err));
-  }, [memberArticleSearchObj,articlesRebuild]);
+  }, [memberArticleSearchObj, articlesRebuild]);
 
   // ** HANDLERS **//
   const hendleChange = (event: any, newValue: string) => {
@@ -126,7 +126,10 @@ const VisitMyPage = (props: any) => {
       const communityService = new CommunityApiService();
       communityService
         .getChosenArticle(art_id)
-        .then((data) => setChosenSingleBoArticle(data))
+        .then((data) => {
+          setChosenSingleBoArticle(data);
+          setValue("5");
+        })
         .catch((err) => console.log(err));
     } catch (err: any) {
       console.log(err);
@@ -156,8 +159,8 @@ const VisitMyPage = (props: any) => {
                     >
                       <Box className="article_bott">
                         <Pagination
-                          count={5}
-                          page={1}
+                          count={memberArticleSearchObj.limit}
+                          page={memberArticleSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
                               style={{ color: "white" }}
@@ -196,7 +199,7 @@ const VisitMyPage = (props: any) => {
                 <TabPanel value={"5"}>
                   <Box className="menu_name">Tanlangan Maqola</Box>
                   <Box>
-                    <TvIewer text={`<h3>HELLO</h3>`} />
+                    <TvIewer chosenSingleBoArticle={chosenSingleBoArticle} />
                   </Box>
                 </TabPanel>
                 <TabPanel value={"6"}>
