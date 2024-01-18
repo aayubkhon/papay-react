@@ -48,7 +48,7 @@ const ProcessOrders = (props: any) => {
       sweetErrorhandling(err).then();
     }
   };
-  // const {processOrders} = useSelector(processOrdersRetriever)
+  const {processOrders} = useSelector(processOrdersRetriever)
   return (
     <TabPanel value={"1"}>
       {/* <Stack >

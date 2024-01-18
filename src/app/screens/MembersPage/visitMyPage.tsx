@@ -42,6 +42,7 @@ import {
 } from "../../../lib/sweetAlert";
 import CommunityApiService from "../../apiServices/communityApiService";
 import MemberApiService from "../../apiServices/memberApiService";
+import { verifyMemberData } from "../../apiServices/verify";
 
 // **  REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -87,6 +88,7 @@ const VisitMyPage = (props: any) => {
   const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
   const [value, setValue] = useState("1");
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
+  const [followRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberArticleSearchObj, setMemberArticleSearchObj] =
     useState<SearchMemberBoArticles>({
       mb_id: "none",
@@ -110,7 +112,7 @@ const VisitMyPage = (props: any) => {
       .getChosenMember(virifiedMemberData?._id)
       .then((data) => setChosenMember(data))
       .catch((err) => console.log(err));
-  }, [memberArticleSearchObj, articlesRebuild]);
+  }, [memberArticleSearchObj, articlesRebuild,followRebuild]);
 
   // ** HANDLERS **//
   const hendleChange = (event: any, newValue: string) => {
@@ -159,7 +161,7 @@ const VisitMyPage = (props: any) => {
                     >
                       <Box className="article_bott">
                         <Pagination
-                          count={memberArticleSearchObj.limit}
+                          count={memberArticleSearchObj.page >= 3 ? memberArticleSearchObj.page + 1 : 3}
                           page={memberArticleSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
@@ -181,13 +183,23 @@ const VisitMyPage = (props: any) => {
                 <TabPanel value={"2"}>
                   <Box className="menu_name">Followers</Box>
                   <Box>
-                    <MemberFollowers actions_enabled={true} />
+                    <MemberFollowers
+                      actions_enabled={true}
+                      mb_id={props.verifyMemberData?.id}
+                      setFollowRebuild={setFollowRebuild}
+                      followRebuild={followRebuild}
+                    />
                   </Box>
                 </TabPanel>
                 <TabPanel value={"3"}>
                   <Box className="menu_name">Followings</Box>
                   <Box>
-                    <MemberFollowing actions_enabled={true} />
+                    <MemberFollowing
+                      actions_enabled={true}
+                      mb_id={props.verifyMemberData?.id}
+                      setFollowRebuild={setFollowRebuild}
+                      followRebuild={followRebuild}
+                    />
                   </Box>
                 </TabPanel>
                 <TabPanel value={"4"}>
@@ -232,10 +244,18 @@ const VisitMyPage = (props: any) => {
                     />
                   </div>
                   <div className="user_box">
-                    <img className="user_svg" src="/icons/user.svg" alt="" />
+                    <img
+                      className="user_svg"
+                      src={
+                        chosenMember?.mb_type === "RESTAURANT"
+                          ? "/icons/restaurant.svg"
+                          : "/icons/user.svg"
+                      }
+                      alt=""
+                    />
                   </div>
-                  <span className="user_name">Oliver Queen</span>
-                  <span className="user">USER</span>
+                  <span className="user_name">{chosenMember?.mb_nick}</span>
+                  <span className="user">{chosenMember?.mb_type}</span>
                 </Box>
                 <Box className="user_media_box">
                   <Facebook />
@@ -244,10 +264,13 @@ const VisitMyPage = (props: any) => {
                   <YouTube />
                 </Box>
                 <Box className="user_media_box">
-                  <p>Followers:3</p>
-                  <p>Followings:2</p>
+                  <p>Followers:{chosenMember?.mb_subscriber_cnt}</p>
+                  <p>Followings:{chosenMember?.mb_follow_cnt}</p>
                 </Box>
-                <p className="user_desc">Qushimcha malumot kiritilmagan</p>
+                <p className="user_desc">
+                  {chosenMember?.mb_description ??
+                    "Qushimcha malumot kiritilmagan"}
+                </p>
                 <Box
                   display={"flex"}
                   justifyContent={"flex-end"}
